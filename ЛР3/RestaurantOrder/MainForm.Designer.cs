@@ -51,7 +51,7 @@
             this.lbMenuGroups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbMenuGroups.FormattingEnabled = true;
-            this.lbMenuGroups.Location = new System.Drawing.Point(0, 0);
+            this.lbMenuGroups.Location = new System.Drawing.Point(1, 5);
             this.lbMenuGroups.Name = "lbMenuGroups";
             this.lbMenuGroups.Size = new System.Drawing.Size(120, 433);
             this.lbMenuGroups.TabIndex = 0;

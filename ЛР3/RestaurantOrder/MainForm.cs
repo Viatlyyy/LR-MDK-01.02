@@ -44,7 +44,7 @@ namespace RestaurantOrder
                 return;
             }
 
-            string[] lines = File.ReadAllLines(CsvFileName);
+            string[] lines = File.ReadAllLines(CsvFileName, Encoding.GetEncoding(1251));
             int processedCount = 0;
 
             foreach (string line in lines)

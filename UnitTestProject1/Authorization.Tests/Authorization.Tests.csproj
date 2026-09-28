@@ -62,7 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserServiceTests.cs" />
+    <Compile Include="TUsersServise.cs" />
+    <Compile Include="TUsersImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

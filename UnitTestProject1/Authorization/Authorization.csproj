@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserRepository.cs" />
+    <Compile Include="IUsersRepository.cs" />
+    <Compile Include="IUsersFile.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserService.cs" />
+    <Compile Include="UsersService.cs" />
+    <Compile Include="UsersImportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

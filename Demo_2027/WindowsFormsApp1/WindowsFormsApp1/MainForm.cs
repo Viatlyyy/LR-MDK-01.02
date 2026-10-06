@@ -1,4 +1,5 @@
-﻿using DemoLib.Models;
+﻿using System;
+using DemoLib.Models;
 using DemoLib.Presenters;
 using System.Windows.Forms;
 
@@ -26,7 +27,31 @@ namespace WindowsFormsApp1
                 productsPresenter_.AddView(card);
             }
 
+            ResizeProductCards();
             productsPresenter_.Update();
+        }
+
+        private void MainLayout_ClientSizeChanged(object sender, EventArgs e)
+        {
+            ResizeProductCards();
+        }
+
+        private void ResizeProductCards()
+        {
+            MainLayout.SuspendLayout();
+            try
+            {
+                foreach (Control card in MainLayout.Controls)
+                {
+                    // ClientSize already excludes the visible scroll bar.
+                    card.Width = Math.Max(0, MainLayout.ClientSize.Width
+                        - MainLayout.Padding.Horizontal - card.Margin.Horizontal);
+                }
+            }
+            finally
+            {
+                MainLayout.ResumeLayout(true);
+            }
         }
     }
 }

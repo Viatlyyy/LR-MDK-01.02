@@ -155,7 +155,7 @@ namespace DemoUIComponents
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.CardLayout);
             this.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular);

@@ -29,7 +29,7 @@ namespace DemoUIComponents
             CountLabel.Text = "Количество: " + (product.Count > 5 ? "много" : "мало");
             PartsLabel.Text = "Состав: " + product.Parts;
             PriceLabel.Text = product.Price.ToString("C", CultureInfo.GetCultureInfo("ru-RU"));
-            BackColor = product.Count <= 3 ? Color.FromArgb(255, 128, 128) : Color.White;
+            BackColor = product.Count <= 3 ? Color.FromArgb(255, 128, 128) : Color.FromArgb(210, 246, 231);
 
             Image nextImage = LoadProductImage(product.ImagePath);
             Image previousImage = ProductPictureBox.Image;

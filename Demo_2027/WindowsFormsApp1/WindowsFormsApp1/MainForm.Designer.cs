@@ -34,7 +34,7 @@
             // MainLayout
             // 
             this.MainLayout.AutoScroll = true;
-            this.MainLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
+            this.MainLayout.BackColor = System.Drawing.Color.White;
             this.MainLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.MainLayout.WrapContents = false;
             this.MainLayout.Padding = new System.Windows.Forms.Padding(16);

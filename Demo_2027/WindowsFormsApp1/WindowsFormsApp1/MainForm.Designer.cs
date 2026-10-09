@@ -35,28 +35,21 @@
             // 
             this.MainLayout.AutoScroll = true;
             this.MainLayout.BackColor = System.Drawing.Color.White;
-            this.MainLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.MainLayout.WrapContents = false;
-            this.MainLayout.Padding = new System.Windows.Forms.Padding(16);
             this.MainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainLayout.Location = new System.Drawing.Point(0, 0);
             this.MainLayout.Name = "MainLayout";
-            this.MainLayout.Size = new System.Drawing.Size(960, 600);
+            this.MainLayout.Size = new System.Drawing.Size(934, 581);
             this.MainLayout.TabIndex = 0;
-            this.MainLayout.ClientSizeChanged += new System.EventHandler(this.MainLayout_ClientSizeChanged);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
-            this.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular);
-            this.MinimumSize = new System.Drawing.Size(640, 360);
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ClientSize = new System.Drawing.Size(960, 600);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(934, 581);
             this.Controls.Add(this.MainLayout);
+            this.MinimumSize = new System.Drawing.Size(920, 620);
             this.Name = "MainForm";
-            this.Text = "Каталог товаров";
+            this.Text = "Магазин";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 

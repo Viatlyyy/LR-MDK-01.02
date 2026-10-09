@@ -1,78 +1,79 @@
-using DemoLib;
+﻿using DemoLib;
 using DemoLib.Views;
-using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace DemoUIComponents
 {
-    public partial class ProductCard : UserControl, IProductsView
+    public partial class ProductCard : System.Windows.Forms.UserControl, IProductsView
     {
+        private int count_;
         public ProductCard()
         {
             InitializeComponent();
+            foreach(Control c in Controls)
+            {
+                c.MouseMove += ProductCard_MouseMove;
+                c.MouseLeave += ProductCard_MouseLeave;
+            }
+            
         }
 
         public void Show(Product product)
         {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            count_ = product.Count;
 
-            NameLabel.Text = string.IsNullOrEmpty(product.Supplier)
-                ? product.Name ?? string.Empty
-                : product.Supplier + " | " + (product.Name ?? string.Empty);
-            CategoryLabel.Text = "Категория: " + product.Category;
-            CountLabel.Text = "Количество: " + (product.Count > 5 ? "много" : "мало");
-            PartsLabel.Text = "Состав: " + product.Parts;
-            PriceLabel.Text = product.Price.ToString("C", CultureInfo.GetCultureInfo("ru-RU"));
-            BackColor = product.Count <= 3 ? Color.FromArgb(255, 128, 128) : Color.FromArgb(210, 246, 231);
-
-            Image nextImage = LoadProductImage(product.ImagePath);
-            Image previousImage = ProductPictureBox.Image;
-            ProductPictureBox.Image = nextImage;
-            if (previousImage != null)
-                previousImage.Dispose();
-        }
-
-        private static Image LoadProductImage(string imagePath)
-        {
-            if (!string.IsNullOrWhiteSpace(imagePath))
+            CategoryLabel.Text = product.Category;
+            if (product.Count > 5)
             {
-                try
-                {
-                    string fullPath = Path.IsPathRooted(imagePath)
-                        ? imagePath
-                        : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, imagePath);
-                    if (File.Exists(fullPath))
-                    {
-                        using (Image source = Image.FromFile(fullPath))
-                            return new Bitmap(source);
-                    }
-                }
-                catch (ArgumentException) { }
-                catch (IOException) { }
-                catch (UnauthorizedAccessException) { }
-                catch (ExternalException) { }
-                // GDI+ also reports an invalid image format as OutOfMemoryException.
-                catch (OutOfMemoryException) { }
+                CountLabel.Text = product.Count.ToString() + " (много)";
+            }
+            else
+            {
+                CountLabel.Text = product.Count.ToString() + " (мало)";
+            }
+                PartsLabel.Text = product.Parts;
+            PriceProductLabel.Text = product.Price.ToString("N2", CultureInfo.GetCultureInfo("ru-RU")) + " ₽";
+            SupplierLabel.Text = product.Supplier + " | " + product.Name; 
+
+            if (product.ImagePath == "" || product.ImagePath == null)
+            {
+                ImagePictureBox.ImageLocation = "..\\..\\..\\Images\\picture.png";
+            }
+            else
+            {
+                ImagePictureBox.ImageLocation = product.ImagePath;
+            }      
+            
+            if (product.Count <= 3)
+            {
+                BackColor = ColorTranslator.FromHtml("#FF8080");;
             }
 
-            var resources = new ComponentResourceManager(typeof(ProductCard));
-            return (Image)resources.GetObject("ProductPictureBox.Image");
         }
 
-        private void DisposeProductImage()
+        private void ProductCard_MouseMove(object sender, MouseEventArgs e)
         {
-            if (ProductPictureBox == null)
-                return;
-            Image image = ProductPictureBox.Image;
-            ProductPictureBox.Image = null;
-            if (image != null)
-                image.Dispose();
+            BackColor = ColorTranslator.FromHtml("#70B2AF");
         }
+
+        private void ProductCard_MouseLeave(object sender, System.EventArgs e)
+        {
+            if (count_ <= 3)
+            {
+                BackColor = ColorTranslator.FromHtml("#FF8080");
+            }
+            else
+                BackColor = ColorTranslator.FromHtml("#D2F6E7");
+
+        }
+
+        private void ProductCard_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+        }
+
+
     }
 }

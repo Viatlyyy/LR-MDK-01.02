@@ -1,10 +1,12 @@
-﻿using System;
-using DemoLib.Models;
+﻿using DemoLib.Models;
 using DemoLib.Presenters;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
+    // цвета
+    // доп фон #D2F6E7
+    // акцентир #70B2AF
     public partial class MainForm : Form
     {
         private ProductsPresenter productsPresenter_;
@@ -27,31 +29,7 @@ namespace WindowsFormsApp1
                 productsPresenter_.AddView(card);
             }
 
-            ResizeProductCards();
             productsPresenter_.Update();
-        }
-
-        private void MainLayout_ClientSizeChanged(object sender, EventArgs e)
-        {
-            ResizeProductCards();
-        }
-
-        private void ResizeProductCards()
-        {
-            MainLayout.SuspendLayout();
-            try
-            {
-                foreach (Control card in MainLayout.Controls)
-                {
-                    // ClientSize already excludes the visible scroll bar.
-                    card.Width = Math.Max(0, MainLayout.ClientSize.Width
-                        - MainLayout.Padding.Horizontal - card.Margin.Horizontal);
-                }
-            }
-            finally
-            {
-                MainLayout.ResumeLayout(true);
-            }
         }
     }
 }

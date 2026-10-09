@@ -62,8 +62,5 @@
       <Name>DemoLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\picture.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,18 @@
 ﻿using DemoLib;
 using DemoLib.Views;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 namespace DemoUIComponents
 {
     public partial class ProductCard : System.Windows.Forms.UserControl, IProductsView
     {
-        private int count_;
+        private Product product_;
+
+        private Color normalColor_ = ColorTranslator.FromHtml("#D2F6E7");
+        private Color enteringColor_ = ColorTranslator.FromHtml("#70B2AF");
+        private Color deficitColor_ = ColorTranslator.FromHtml("#FF8080");
+
         public ProductCard()
         {
             InitializeComponent();
@@ -20,59 +24,71 @@ namespace DemoUIComponents
             
         }
 
+        private string CountText()
+        {
+            if (product_.Count > 5)
+            {
+                return product_.Count.ToString() + " (много)";
+            }
+
+            return product_.Count.ToString() + " (мало)";
+        }
+
+        private string ImagePath()
+        {
+            if (product_.ImagePath == "" || product_.ImagePath == null)
+            {
+                return "..\\..\\..\\Images\\picture.png";
+            }
+
+            return product_.ImagePath;
+        }
+
+        private Color GetColor()
+        {
+            if (product_ != null && product_.Count <= 3)
+            {
+                return deficitColor_;
+            }
+
+            return normalColor_;
+        }
+
         public void Show(Product product)
         {
-            count_ = product.Count;
+            product_ = product;
 
             CategoryLabel.Text = product.Category;
-            if (product.Count > 5)
-            {
-                CountLabel.Text = product.Count.ToString() + " (много)";
-            }
-            else
-            {
-                CountLabel.Text = product.Count.ToString() + " (мало)";
-            }
-                PartsLabel.Text = product.Parts;
-            PriceProductLabel.Text = product.Price.ToString("N2", CultureInfo.GetCultureInfo("ru-RU")) + " ₽";
+
+            CountLabel.Text = CountText();
+
+            PartsLabel.Text = product.Parts;
+            PriceProductLabel.Text = product.Price.ToString() + " руб.";
             SupplierLabel.Text = product.Supplier + " | " + product.Name; 
 
-            if (product.ImagePath == "" || product.ImagePath == null)
-            {
-                ImagePictureBox.ImageLocation = "..\\..\\..\\Images\\picture.png";
-            }
-            else
-            {
-                ImagePictureBox.ImageLocation = product.ImagePath;
-            }      
-            
-            if (product.Count <= 3)
-            {
-                BackColor = ColorTranslator.FromHtml("#FF8080");;
-            }
+            ImagePictureBox.ImageLocation = ImagePath();
+
+            BackColor = GetColor();
 
         }
 
         private void ProductCard_MouseMove(object sender, MouseEventArgs e)
         {
-            BackColor = ColorTranslator.FromHtml("#70B2AF");
+            BackColor = enteringColor_;
         }
 
         private void ProductCard_MouseLeave(object sender, System.EventArgs e)
         {
-            if (count_ <= 3)
-            {
-                BackColor = ColorTranslator.FromHtml("#FF8080");
-            }
-            else
-                BackColor = ColorTranslator.FromHtml("#D2F6E7");
+            BackColor = GetColor();
 
         }
 
+        /*
         private void ProductCard_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
         }
+        */
 
 
     }

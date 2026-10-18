@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
+using DemoLib.Repositories;
 
 namespace DemoLib.Models
 {
@@ -26,6 +27,16 @@ namespace DemoLib.Models
                 Parts = "натуральная кожа ",
                 ImagePath = ""
             });
+            data_.Add(new Product
+            {
+                Name = "Кроссовки детские «Радуга» экокожа перфорированная",
+                Category = "Детская обувь",
+                Count = 60,
+                Price = 1990.0,
+                Supplier = "Лапушка",
+                Parts = "Верх — экокожа перфорированная, вставки — нейлон, стелька — ортопедическая с латексной подушкой, подошва — ЭВА",
+                ImagePath = "..\\..\\..\\Images\\IMG_KS_195222.png"
+            });
         }
 
         public List<Product> Load()
@@ -38,39 +49,30 @@ namespace DemoLib.Models
             return data_.Count;
         }
 
-        public void UpdatePrices(List<Order> orders)
+        public void UpdatePrices(IOrdersRepository ordersRepository)
         {
+            if (ordersRepository == null)
+            {
+                throw new ArgumentNullException(nameof(ordersRepository));
+            }
+
+            // Один снимок загрузки: источник БД не перечисляется заново для каждого товара.
+            IEnumerable<Order> orders = ordersRepository.Load().ToArray();
             DateTime current = DateTime.Today;
             DateTime end = new DateTime(current.Year, current.Month, 1);
             DateTime start = end.AddMonths(-1);
 
-            List<Product> discountProducts = new List<Product>();
-            foreach(Product product in data_)
-            {
-                int countPrevMonthOrders = 0;
-                foreach(Order order in orders)
-                {
-                    foreach(OrderItem orderItem in order.Items)
-                    {
-                        if(orderItem.ProductItem == product.Name)
-                        {
-                            if(orderItem.SaleDate >= start && orderItem.SaleDate < end)
-                            {
-                                ++countPrevMonthOrders;
-                            }
-                        }
-                    }
-                }
-
-                if (countPrevMonthOrders == 0)
-                {
-                    discountProducts.Add(product);
-                }
-            }
+            List<Product> discountProducts = data_
+                .Where(product => !orders
+                    .SelectMany(order => order.Items)
+                    .Any(item => item.ProductItem == product.Name
+                        && item.SaleDate >= start
+                        && item.SaleDate < end))
+                .ToList();
 
             foreach (Product product in discountProducts)
             {
-                product.Price = product.Price * 0.75;
+                product.Price *= 0.75;
             }
         }
     }

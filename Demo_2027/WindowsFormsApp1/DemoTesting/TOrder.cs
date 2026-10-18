@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DemoLib;
 using DemoLib.Models;
+using DemoTesting.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DemoTesting
@@ -9,128 +10,235 @@ namespace DemoTesting
     [TestClass]
     public class TOrder
     {
-        private ProductsModel model;
-        private Product product;
-        private DateTime currentMonth;
-        private DateTime previousMonth;
-
-        [TestInitialize]
-        public void SetUp()
+        [TestMethod]
+        public void UpdatePrices_LoadsOrdersFromRepositoryOnce_AndUsesThemForDiscount()
         {
             DateTime today = DateTime.Today;
-            currentMonth = new DateTime(today.Year, today.Month, 1);
-            previousMonth = currentMonth.AddMonths(-1);
-            model = new ProductsModel();
+            DateTime previousMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+            Product soldProduct = new Product { Name = "Товар A", Price = 1000.0 };
+            Product unsoldProduct = new Product { Name = "Товар B", Price = 2000.0 };
+            OrdersRepositoryMock repository = new OrdersRepositoryMock(new[]
+            {
+                new Order
+                {
+                    Id = 1,
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = soldProduct.Name, Count = 1, SaleDate = previousMonth }
+                    }
+                }
+            });
+            ProductsModel model = new ProductsModel();
             model.Load().Clear();
-            product = new Product { Name = "Товар A", Price = 1000.0 };
-            model.Load().Add(product);
+            model.Load().Add(soldProduct);
+            model.Load().Add(unsoldProduct);
+
+            model.UpdatePrices(repository);
+
+            Assert.AreEqual(1, repository.LoadCallCount, "Модель должна загрузить заказы один раз.");
+            Assert.AreEqual(1000.0, soldProduct.Price, "Проданный товар не должен получать скидку.");
+            Assert.AreEqual(1500.0, unsoldProduct.Price, "Непроданный товар должен получить скидку 25%.");
+        }
+
+        [TestMethod]
+        public void UpdatePrices_NullRepository_ThrowsArgumentNullException()
+        {
+            ProductsModel model = new ProductsModel();
+
+            ArgumentNullException error = Assert.ThrowsException<ArgumentNullException>(
+                () => model.UpdatePrices(null));
+
+            Assert.AreEqual("ordersRepository", error.ParamName);
         }
 
         [TestMethod]
         public void UpdatePrices_NoOrders_ReducesPriceBy25Percent()
         {
-            model.UpdatePrices(new List<Order>());
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
 
-            Assert.AreEqual(750.0, product.Price, 0.001);
+            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>()));
+
+            Assert.AreEqual(750.0, product.Price);
         }
 
         [TestMethod]
         public void UpdatePrices_SaleOnFirstDayOfPreviousMonth_KeepsPrice()
         {
-            model.UpdatePrices(OrdersFor(product.Name, previousMonth));
+            DateTime today = DateTime.Today;
+            DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime previousMonth = currentMonth.AddMonths(-1);
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
 
-            Assert.AreEqual(1000.0, product.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_SaleAtEndOfLastDayOfPreviousMonth_KeepsPrice()
-        {
-            model.UpdatePrices(OrdersFor(product.Name, currentMonth.AddTicks(-1)));
-
-            Assert.AreEqual(1000.0, product.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_SalesOutsidePreviousMonth_ReducesPrice()
-        {
-            List<Order> orders = OrdersFor(product.Name, previousMonth.AddTicks(-1));
-            orders.AddRange(OrdersFor(product.Name, currentMonth));
-
-            model.UpdatePrices(orders);
-
-            Assert.AreEqual(750.0, product.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_OnlyOneProductWasSold_DiscountsOnlyUnsoldProduct()
-        {
-            Product other = new Product { Name = "Товар B", Price = 2000.0 };
-            model.Load().Add(other);
-
-            model.UpdatePrices(OrdersFor(other.Name, previousMonth.AddDays(10)));
-
-            Assert.AreEqual(750.0, product.Price, 0.001);
-            Assert.AreEqual(2000.0, other.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_OrderWithoutItems_ReducesPrice()
-        {
-            List<Order> orders = new List<Order>
-            {
-                new Order { Items = new List<OrderItem>() }
-            };
-
-            model.UpdatePrices(orders);
-
-            Assert.AreEqual(750.0, product.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_MultipleProductsInOneOrder_KeepsBothPrices()
-        {
-            Product other = new Product { Name = "Товар B", Price = 2000.0 };
-            model.Load().Add(other);
-            List<Order> orders = OrdersFor("Товар вне каталога", previousMonth.AddDays(10));
-            orders[0].Items.Add(new OrderItem
-            {
-                ProductItem = product.Name, Count = 1, SaleDate = previousMonth.AddDays(10)
-            });
-            orders[0].Items.Add(new OrderItem
-            {
-                ProductItem = other.Name, Count = 2, SaleDate = previousMonth.AddDays(10)
-            });
-
-            model.UpdatePrices(orders);
-
-            Assert.AreEqual(1000.0, product.Price, 0.001);
-            Assert.AreEqual(2000.0, other.Price, 0.001);
-        }
-
-        [TestMethod]
-        public void UpdatePrices_SaleInLaterOrder_KeepsPrice()
-        {
-            List<Order> orders = OrdersFor(product.Name, previousMonth.AddDays(-1));
-            orders.AddRange(OrdersFor("Другой товар", previousMonth.AddDays(10)));
-            orders.AddRange(OrdersFor(product.Name, previousMonth.AddDays(15)));
-
-            model.UpdatePrices(orders);
-
-            Assert.AreEqual(1000.0, product.Price, 0.001);
-        }
-
-        private static List<Order> OrdersFor(string productName, DateTime saleDate)
-        {
-            return new List<Order>
+            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
             {
                 new Order
                 {
                     Items = new List<OrderItem>
                     {
-                        new OrderItem { ProductItem = productName, Count = 1, SaleDate = saleDate }
+                        new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = previousMonth }
+                    }
+                }
+            }));
+
+            Assert.AreEqual(1000.0, product.Price);
+        }
+
+        [TestMethod]
+        public void UpdatePrices_SaleAtEndOfLastDayOfPreviousMonth_KeepsPrice()
+        {
+            DateTime today = DateTime.Today;
+            DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
+
+            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = currentMonth.AddTicks(-1) }
+                    }
+                }
+            }));
+
+            Assert.AreEqual(1000.0, product.Price);
+        }
+
+        [TestMethod]
+        public void UpdatePrices_SalesOutsidePreviousMonth_ReducesPrice()
+        {
+            DateTime today = DateTime.Today;
+            DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime previousMonth = currentMonth.AddMonths(-1);
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
+
+            List<Order> orders = new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = previousMonth.AddTicks(-1) }
                     }
                 }
             };
+            orders.AddRange(new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = currentMonth }
+                    }
+                }
+            });
+
+            model.UpdatePrices(new OrdersRepositoryMock(orders));
+
+            Assert.AreEqual(750.0, product.Price);
+        }
+
+        [TestMethod]
+        public void UpdatePrices_OnlyOneProductWasSold_DiscountsOnlyUnsoldProduct()
+        {
+            DateTime today = DateTime.Today;
+            DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime previousMonth = currentMonth.AddMonths(-1);
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
+
+            Product other = new Product { Name = "Товар B", Price = 2000.0 };
+            model.Load().Add(other);
+
+            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = other.Name, Count = 1, SaleDate = previousMonth.AddDays(10) }
+                    }
+                }
+            }));
+
+            Assert.AreEqual(750.0, product.Price);
+            Assert.AreEqual(2000.0, other.Price);
+        }
+
+        [TestMethod]
+        public void UpdatePrices_AllThreeProductsOrderedThisMonth_DiscountsSecondAndThirdProducts()
+        {
+            DateTime today = DateTime.Today;
+            DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime previousMonth = currentMonth.AddMonths(-1);
+            DateTime twoMonthsAgo = currentMonth.AddMonths(-2);
+            DateTime threeMonthsAgo = currentMonth.AddMonths(-3);
+
+            ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+
+            Product first = new Product { Name = "Товар A", Price = 1000.0 };
+            Product second = new Product { Name = "Товар B", Price = 2000.0 };
+            Product third = new Product { Name = "Товар C", Price = 3000.0 };
+
+            model.Load().Add(first);
+            model.Load().Add(second);
+            model.Load().Add(third);
+
+            List<Order> orders = new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = third.Name, Count = 1, SaleDate = threeMonthsAgo }
+                    }
+                },
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = second.Name, Count = 1, SaleDate = twoMonthsAgo }
+                    }
+                },
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = first.Name, Count = 1, SaleDate = previousMonth }
+                    }
+                },
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductItem = first.Name, Count = 1, SaleDate = today },
+                        new OrderItem { ProductItem = second.Name, Count = 1, SaleDate = today },
+                        new OrderItem { ProductItem = third.Name, Count = 1, SaleDate = today }
+                    }
+                }
+            };
+
+            model.UpdatePrices(new OrdersRepositoryMock(orders));
+
+            Assert.AreEqual(1000.0, first.Price);
+            Assert.AreEqual(1500.0, second.Price);
+            Assert.AreEqual(2250.0, third.Price);
         }
     }
 }
+

@@ -53,7 +53,7 @@ namespace DemoLib.Models
         {
             if (ordersRepository == null)
             {
-                throw new ArgumentNullException(nameof(ordersRepository));
+                return;
             }
 
             // Один снимок загрузки: источник БД не перечисляется заново для каждого товара.

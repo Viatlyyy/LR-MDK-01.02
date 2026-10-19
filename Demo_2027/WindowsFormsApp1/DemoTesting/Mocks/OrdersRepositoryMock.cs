@@ -9,7 +9,7 @@ namespace DemoTesting.Mocks
     {
         private IEnumerable<Order> orders_;
 
-        public int LoadCallCount { get; private set; }
+        public int LoadCallCount { get; set; }
 
         public OrdersRepositoryMock(IEnumerable<Order> orders)
         {

@@ -1,7 +1,6 @@
 ﻿using DemoLib.Models;
 using DemoLib.Presenters;
 using DemoLib.Repositories;
-using System;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -23,7 +22,7 @@ namespace WindowsFormsApp1
 
         public MainForm(IOrdersRepository ordersRepository) : this()
         {
-            ordersRepository_ = ordersRepository ?? throw new ArgumentNullException(nameof(ordersRepository));
+            ordersRepository_ = ordersRepository;
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)

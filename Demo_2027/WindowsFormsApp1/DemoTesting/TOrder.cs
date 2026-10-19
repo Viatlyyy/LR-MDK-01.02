@@ -41,14 +41,16 @@ namespace DemoTesting
         }
 
         [TestMethod]
-        public void UpdatePrices_NullRepository_ThrowsArgumentNullException()
+        public void UpdatePrices_NullRepository_KeepsPrices()
         {
             ProductsModel model = new ProductsModel();
+            model.Load().Clear();
+            Product product = new Product { Name = "Товар A", Price = 1000.0 };
+            model.Load().Add(product);
 
-            ArgumentNullException error = Assert.ThrowsException<ArgumentNullException>(
-                () => model.UpdatePrices(null));
+            model.UpdatePrices(null);
 
-            Assert.AreEqual("ordersRepository", error.ParamName);
+            Assert.AreEqual(1000.0, product.Price);
         }
 
         [TestMethod]

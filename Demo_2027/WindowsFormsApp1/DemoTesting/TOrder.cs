@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using DemoLib;
 using DemoLib.Models;
-using DemoTesting.Mocks;
+using DemoLib.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace DemoTesting
 {
@@ -17,7 +18,7 @@ namespace DemoTesting
             DateTime previousMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
             Product soldProduct = new Product { Name = "Товар A", Price = 1000.0 };
             Product unsoldProduct = new Product { Name = "Товар B", Price = 2000.0 };
-            OrdersRepositoryMock repository = new OrdersRepositoryMock(new[]
+            List<Order> orders = new List<Order>
             {
                 new Order
                 {
@@ -27,17 +28,19 @@ namespace DemoTesting
                         new OrderItem { ProductItem = soldProduct.Name, Count = 1, SaleDate = previousMonth }
                     }
                 }
-            });
+            };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
             ProductsModel model = new ProductsModel();
             model.Load().Clear();
             model.Load().Add(soldProduct);
             model.Load().Add(unsoldProduct);
 
-            model.UpdatePrices(repository);
+            model.UpdatePrices(repository.Object);
 
-            Assert.AreEqual(1, repository.LoadCallCount, "Модель должна загрузить заказы один раз.");
-            Assert.AreEqual(1000.0, soldProduct.Price, "Проданный товар не должен получать скидку.");
-            Assert.AreEqual(1500.0, unsoldProduct.Price, "Непроданный товар должен получить скидку 25%.");
+            repository.Verify(repo => repo.Load(), Times.Once());
+            Assert.AreEqual(1000.0, soldProduct.Price);
+            Assert.AreEqual(1500.0, unsoldProduct.Price);
         }
 
         [TestMethod]
@@ -60,8 +63,10 @@ namespace DemoTesting
             model.Load().Clear();
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(new List<Order>());
 
-            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>()));
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(750.0, product.Price);
         }
@@ -76,8 +81,7 @@ namespace DemoTesting
             model.Load().Clear();
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
-
-            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
+            List<Order> orders = new List<Order>
             {
                 new Order
                 {
@@ -86,7 +90,11 @@ namespace DemoTesting
                         new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = previousMonth }
                     }
                 }
-            }));
+            };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
+
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(1000.0, product.Price);
         }
@@ -100,8 +108,7 @@ namespace DemoTesting
             model.Load().Clear();
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
-
-            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
+            List<Order> orders = new List<Order>
             {
                 new Order
                 {
@@ -110,7 +117,11 @@ namespace DemoTesting
                         new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = currentMonth.AddTicks(-1) }
                     }
                 }
-            }));
+            };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
+
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(1000.0, product.Price);
         }
@@ -125,7 +136,6 @@ namespace DemoTesting
             model.Load().Clear();
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
-
             List<Order> orders = new List<Order>
             {
                 new Order
@@ -134,10 +144,7 @@ namespace DemoTesting
                     {
                         new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = previousMonth.AddTicks(-1) }
                     }
-                }
-            };
-            orders.AddRange(new List<Order>
-            {
+                },
                 new Order
                 {
                     Items = new List<OrderItem>
@@ -145,9 +152,11 @@ namespace DemoTesting
                         new OrderItem { ProductItem = product.Name, Count = 1, SaleDate = currentMonth }
                     }
                 }
-            });
+            };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
 
-            model.UpdatePrices(new OrdersRepositoryMock(orders));
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(750.0, product.Price);
         }
@@ -161,12 +170,10 @@ namespace DemoTesting
             ProductsModel model = new ProductsModel();
             model.Load().Clear();
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
-            model.Load().Add(product);
-
             Product other = new Product { Name = "Товар B", Price = 2000.0 };
+            model.Load().Add(product);
             model.Load().Add(other);
-
-            model.UpdatePrices(new OrdersRepositoryMock(new List<Order>
+            List<Order> orders = new List<Order>
             {
                 new Order
                 {
@@ -175,7 +182,11 @@ namespace DemoTesting
                         new OrderItem { ProductItem = other.Name, Count = 1, SaleDate = previousMonth.AddDays(10) }
                     }
                 }
-            }));
+            };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
+
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(750.0, product.Price);
             Assert.AreEqual(2000.0, other.Price);
@@ -189,18 +200,14 @@ namespace DemoTesting
             DateTime previousMonth = currentMonth.AddMonths(-1);
             DateTime twoMonthsAgo = currentMonth.AddMonths(-2);
             DateTime threeMonthsAgo = currentMonth.AddMonths(-3);
-
             ProductsModel model = new ProductsModel();
             model.Load().Clear();
-
             Product first = new Product { Name = "Товар A", Price = 1000.0 };
             Product second = new Product { Name = "Товар B", Price = 2000.0 };
             Product third = new Product { Name = "Товар C", Price = 3000.0 };
-
             model.Load().Add(first);
             model.Load().Add(second);
             model.Load().Add(third);
-
             List<Order> orders = new List<Order>
             {
                 new Order
@@ -234,8 +241,10 @@ namespace DemoTesting
                     }
                 }
             };
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(orders);
 
-            model.UpdatePrices(new OrdersRepositoryMock(orders));
+            model.UpdatePrices(repository.Object);
 
             Assert.AreEqual(1000.0, first.Price);
             Assert.AreEqual(1500.0, second.Price);
@@ -243,4 +252,3 @@ namespace DemoTesting
         }
     }
 }
-

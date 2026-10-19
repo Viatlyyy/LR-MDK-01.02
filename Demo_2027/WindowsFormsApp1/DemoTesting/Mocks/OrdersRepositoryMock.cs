@@ -5,9 +5,9 @@ using DemoLib.Repositories;
 namespace DemoTesting.Mocks
 {
     // Ручной мок: возвращает тестовые заказы и записывает вызовы загрузки.
-    internal sealed class OrdersRepositoryMock : IOrdersRepository
+    internal class OrdersRepositoryMock : IOrdersRepository
     {
-        private readonly IEnumerable<Order> orders_;
+        private IEnumerable<Order> orders_;
 
         public int LoadCallCount { get; private set; }
 

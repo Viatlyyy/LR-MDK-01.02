@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
     {
         private ProductsPresenter productsPresenter_;
         private ProductsModel model_ = new ProductsModel();
-        private readonly IOrdersRepository ordersRepository_;
+        private IOrdersRepository ordersRepository_;
         public MainForm()
         {
             InitializeComponent();

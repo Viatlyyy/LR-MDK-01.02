@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DemoLib.Repositories;
+using DemoLib.Models;
 
 namespace WindowsFormsApp1
 {
@@ -17,8 +18,20 @@ namespace WindowsFormsApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            User user;
+            IAuthorization authorization = new Authorization();
+            using (LoginForm loginForm = new LoginForm(authorization))
+            {
+                if (loginForm.ShowDialog() != DialogResult.OK || loginForm.AuthorizedUser == null)
+                {
+                    return;
+                }
+                user = loginForm.AuthorizedUser;
+            }
             IOrdersRepository ordersRepository = new DemoOrdersRepository();
-            Application.Run(new MainForm(ordersRepository));
+            MainForm mainForm = new MainForm(ordersRepository);
+            mainForm.CurrentUser = user;
+            Application.Run(mainForm);
         }
     }
 }

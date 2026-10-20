@@ -1,6 +1,7 @@
 ﻿using DemoLib;
 using DemoLib.Views;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DemoUIComponents
@@ -36,12 +37,18 @@ namespace DemoUIComponents
 
         private string ImagePath()
         {
-            if (product_.ImagePath == "" || product_.ImagePath == null)
+            string path = product_.ImagePath;
+            if (string.IsNullOrEmpty(path))
             {
-                return "..\\..\\..\\Images\\picture.png";
+                path = "..\\..\\..\\Images\\picture.png";
             }
 
-            return product_.ImagePath;
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return Path.Combine(Application.StartupPath, "Images", Path.GetFileName(path));
         }
 
         private Color GetColor()

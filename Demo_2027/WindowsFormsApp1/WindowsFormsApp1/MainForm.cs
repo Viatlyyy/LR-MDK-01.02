@@ -2,8 +2,6 @@
 using DemoLib.Presenters;
 using DemoLib.Repositories;
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -39,7 +37,6 @@ namespace WindowsFormsApp1
                 UserNameLabel.Text = CurrentUser.FullName;
                 UserRoleLabel.Text = CurrentUser.Role;
             }
-            UserStatusPictureBox.Invalidate();
 
             // До подключения репозитория показываем исходные цены, а не считаем заказы пустыми.
             if (ordersRepository_ != null)
@@ -73,20 +70,5 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void UserStatusPictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.TranslateTransform(0, (UserStatusPictureBox.Height - 56) / 2F);
-            using (Pen outline = new Pen(Color.FromArgb(55, 75, 70), 2F))
-            {
-                e.Graphics.DrawEllipse(outline, 14, 10, 16, 16);
-                e.Graphics.DrawArc(outline, 7, 29, 30, 26, 180, 180);
-            }
-            Color statusColor = CurrentUser == null ? Color.Gray : Color.FromArgb(112, 178, 175);
-            using (Brush status = new SolidBrush(statusColor))
-            {
-                e.Graphics.FillEllipse(status, 31, 38, 10, 10);
-            }
-        }
     }
 }

@@ -41,7 +41,6 @@
             this.UserTextLayout = new System.Windows.Forms.TableLayoutPanel();
             this.UserNameLabel = new System.Windows.Forms.Label();
             this.UserRoleLabel = new System.Windows.Forms.Label();
-            this.UserStatusPictureBox = new System.Windows.Forms.PictureBox();
             this.ContentPanel.SuspendLayout();
             this.PagesTabControl.SuspendLayout();
             this.CardsTabPage.SuspendLayout();
@@ -49,7 +48,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.UserInfoPanel.SuspendLayout();
             this.UserTextLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserStatusPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // MainLayout
@@ -103,13 +101,11 @@
             this.OrdersTabPage.Text = "Заказы";
             // HeaderLayout
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
-            this.HeaderLayout.ColumnCount = 3;
+            this.HeaderLayout.ColumnCount = 2;
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.HeaderLayout.Controls.Add(this.WindowTitleLabel, 0, 0);
-            this.HeaderLayout.Controls.Add(this.LogoPictureBox, 1, 0);
-            this.HeaderLayout.Controls.Add(this.UserInfoPanel, 2, 0);
+            this.HeaderLayout.Controls.Add(this.UserInfoPanel, 1, 0);
             this.HeaderLayout.Dock = System.Windows.Forms.DockStyle.Top;
             this.HeaderLayout.Location = new System.Drawing.Point(0, 0);
             this.HeaderLayout.Name = "HeaderLayout";
@@ -123,24 +119,24 @@
             this.WindowTitleLabel.Font = new System.Drawing.Font("Calibri", 22F, System.Drawing.FontStyle.Bold);
             this.WindowTitleLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindowTitleLabel.Name = "WindowTitleLabel";
-            this.WindowTitleLabel.Size = new System.Drawing.Size(408, 84);
+            this.WindowTitleLabel.Size = new System.Drawing.Size(453, 84);
             this.WindowTitleLabel.Text = "Карточки товаров";
             this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // LogoPictureBox
-            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
-            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";
             this.LogoPictureBox.Size = new System.Drawing.Size(84, 84);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabStop = false;
             // UserInfoPanel
             this.UserInfoPanel.Controls.Add(this.UserTextLayout);
-            this.UserInfoPanel.Controls.Add(this.UserStatusPictureBox);
+            this.UserInfoPanel.Controls.Add(this.LogoPictureBox);
             this.UserInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserInfoPanel.Margin = new System.Windows.Forms.Padding(0);
             this.UserInfoPanel.Name = "UserInfoPanel";
-            this.UserInfoPanel.Size = new System.Drawing.Size(500, 84);
+            this.UserInfoPanel.Size = new System.Drawing.Size(555, 84);
             // UserTextLayout
             this.UserTextLayout.ColumnCount = 1;
             this.UserTextLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -151,7 +147,7 @@
             this.UserTextLayout.RowCount = 2;
             this.UserTextLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.UserTextLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.UserTextLayout.Size = new System.Drawing.Size(448, 84);
+            this.UserTextLayout.Size = new System.Drawing.Size(471, 84);
             // UserNameLabel
             this.UserNameLabel.AutoEllipsis = true;
             this.UserNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -169,13 +165,6 @@
             this.UserRoleLabel.Name = "UserRoleLabel";
             this.UserRoleLabel.Text = "Пользователь";
             this.UserRoleLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // UserStatusPictureBox
-            this.UserStatusPictureBox.AccessibleName = "Статус пользователя";
-            this.UserStatusPictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UserStatusPictureBox.Name = "UserStatusPictureBox";
-            this.UserStatusPictureBox.Size = new System.Drawing.Size(52, 84);
-            this.UserStatusPictureBox.TabStop = false;
-            this.UserStatusPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.UserStatusPictureBox_Paint);
             // 
             // MainForm
             // 
@@ -202,7 +191,6 @@
             this.UserInfoPanel.PerformLayout();
             this.UserTextLayout.ResumeLayout(false);
             this.UserTextLayout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserStatusPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,7 +210,6 @@
         private System.Windows.Forms.TableLayoutPanel UserTextLayout;
         private System.Windows.Forms.Label UserNameLabel;
         private System.Windows.Forms.Label UserRoleLabel;
-        private System.Windows.Forms.PictureBox UserStatusPictureBox;
     }
 }
 

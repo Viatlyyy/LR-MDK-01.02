@@ -128,19 +128,19 @@
             // 
             // PriceProductLabel
             // 
-            this.PriceProductLabel.AutoSize = true;
+            this.PriceProductLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PriceProductLabel.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PriceProductLabel.ForeColor = System.Drawing.Color.Black;
-            this.PriceProductLabel.Location = new System.Drawing.Point(726, 79);
+            this.PriceProductLabel.Location = new System.Drawing.Point(694, 79);
             this.PriceProductLabel.Name = "PriceProductLabel";
-            this.PriceProductLabel.Size = new System.Drawing.Size(78, 36);
+            this.PriceProductLabel.Size = new System.Drawing.Size(168, 42);
             this.PriceProductLabel.TabIndex = 11;
             this.PriceProductLabel.Text = "Цена";
-            this.PriceProductLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.PriceProductLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ProductCard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(246)))), ((int)(((byte)(231)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -153,6 +153,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Calibri", 12F);
             this.Name = "ProductCard";
             this.Size = new System.Drawing.Size(880, 180);
             this.MouseLeave += new System.EventHandler(this.ProductCard_MouseLeave);

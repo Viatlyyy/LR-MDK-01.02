@@ -31,10 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.ContentPanel = new System.Windows.Forms.Panel();
-            this.OrdersPanel = new System.Windows.Forms.Panel();
-            this.NavigationLayout = new System.Windows.Forms.FlowLayoutPanel();
-            this.CardsButton = new System.Windows.Forms.Button();
-            this.OrdersButton = new System.Windows.Forms.Button();
+            this.PagesTabControl = new System.Windows.Forms.TabControl();
+            this.CardsTabPage = new System.Windows.Forms.TabPage();
+            this.OrdersTabPage = new System.Windows.Forms.TabPage();
             this.HeaderLayout = new System.Windows.Forms.TableLayoutPanel();
             this.WindowTitleLabel = new System.Windows.Forms.Label();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
@@ -44,7 +43,8 @@
             this.UserRoleLabel = new System.Windows.Forms.Label();
             this.UserStatusPictureBox = new System.Windows.Forms.PictureBox();
             this.ContentPanel.SuspendLayout();
-            this.NavigationLayout.SuspendLayout();
+            this.PagesTabControl.SuspendLayout();
+            this.CardsTabPage.SuspendLayout();
             this.HeaderLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.UserInfoPanel.SuspendLayout();
@@ -58,62 +58,49 @@
             this.MainLayout.BackColor = System.Drawing.Color.White;
             this.MainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.MainLayout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.MainLayout.Location = new System.Drawing.Point(12, 12);
+            this.MainLayout.Location = new System.Drawing.Point(4, 4);
             this.MainLayout.Name = "MainLayout";
-            this.MainLayout.Size = new System.Drawing.Size(1016, 586);
+            this.MainLayout.Size = new System.Drawing.Size(1000, 584);
             this.MainLayout.TabIndex = 0;
             this.MainLayout.WrapContents = false;
             // ContentPanel
             this.ContentPanel.BackColor = System.Drawing.Color.White;
-            this.ContentPanel.Controls.Add(this.OrdersPanel);
-            this.ContentPanel.Controls.Add(this.MainLayout);
+            this.ContentPanel.Controls.Add(this.PagesTabControl);
             this.ContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentPanel.Location = new System.Drawing.Point(0, 150);
+            this.ContentPanel.Location = new System.Drawing.Point(0, 100);
             this.ContentPanel.Name = "ContentPanel";
             this.ContentPanel.Padding = new System.Windows.Forms.Padding(12);
-            this.ContentPanel.Size = new System.Drawing.Size(1040, 610);
+            this.ContentPanel.Size = new System.Drawing.Size(1040, 660);
             this.ContentPanel.TabIndex = 2;
-            // OrdersPanel
-            this.OrdersPanel.BackColor = System.Drawing.Color.White;
-            this.OrdersPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OrdersPanel.Location = new System.Drawing.Point(12, 12);
-            this.OrdersPanel.Name = "OrdersPanel";
-            this.OrdersPanel.Size = new System.Drawing.Size(1016, 586);
-            this.OrdersPanel.Visible = false;
-            // NavigationLayout
-            this.NavigationLayout.BackColor = System.Drawing.Color.White;
-            this.NavigationLayout.Controls.Add(this.CardsButton);
-            this.NavigationLayout.Controls.Add(this.OrdersButton);
-            this.NavigationLayout.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NavigationLayout.Location = new System.Drawing.Point(0, 100);
-            this.NavigationLayout.Name = "NavigationLayout";
-            this.NavigationLayout.Padding = new System.Windows.Forms.Padding(16, 6, 16, 6);
-            this.NavigationLayout.Size = new System.Drawing.Size(1040, 50);
-            this.NavigationLayout.TabIndex = 1;
-            this.NavigationLayout.WrapContents = false;
-            // CardsButton
-            this.CardsButton.BackColor = System.Drawing.Color.FromArgb(112, 178, 175);
-            this.CardsButton.FlatAppearance.BorderSize = 0;
-            this.CardsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CardsButton.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.CardsButton.Name = "CardsButton";
-            this.CardsButton.Size = new System.Drawing.Size(160, 36);
-            this.CardsButton.TabIndex = 0;
-            this.CardsButton.Text = "Карточки";
-            this.CardsButton.UseVisualStyleBackColor = false;
-            this.CardsButton.Click += new System.EventHandler(this.CardsButton_Click);
-            // OrdersButton
-            this.OrdersButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
-            this.OrdersButton.FlatAppearance.BorderSize = 0;
-            this.OrdersButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OrdersButton.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.OrdersButton.Name = "OrdersButton";
-            this.OrdersButton.Size = new System.Drawing.Size(160, 36);
-            this.OrdersButton.TabIndex = 1;
-            this.OrdersButton.Text = "Заказы";
-            this.OrdersButton.UseVisualStyleBackColor = false;
-            this.OrdersButton.Click += new System.EventHandler(this.OrdersButton_Click);
+            // PagesTabControl
+            this.PagesTabControl.Controls.Add(this.CardsTabPage);
+            this.PagesTabControl.Controls.Add(this.OrdersTabPage);
+            this.PagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PagesTabControl.ItemSize = new System.Drawing.Size(160, 36);
+            this.PagesTabControl.Location = new System.Drawing.Point(12, 12);
+            this.PagesTabControl.Name = "PagesTabControl";
+            this.PagesTabControl.SelectedIndex = 0;
+            this.PagesTabControl.Size = new System.Drawing.Size(1016, 636);
+            this.PagesTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.PagesTabControl.TabIndex = 0;
+            this.PagesTabControl.SelectedIndexChanged += new System.EventHandler(this.PagesTabControl_SelectedIndexChanged);
+            // CardsTabPage
+            this.CardsTabPage.BackColor = System.Drawing.Color.White;
+            this.CardsTabPage.Controls.Add(this.MainLayout);
+            this.CardsTabPage.Location = new System.Drawing.Point(4, 40);
+            this.CardsTabPage.Name = "CardsTabPage";
+            this.CardsTabPage.Padding = new System.Windows.Forms.Padding(4);
+            this.CardsTabPage.Size = new System.Drawing.Size(1008, 592);
+            this.CardsTabPage.TabIndex = 0;
+            this.CardsTabPage.Text = "Карточки";
+            // OrdersTabPage
+            this.OrdersTabPage.BackColor = System.Drawing.Color.White;
+            this.OrdersTabPage.Location = new System.Drawing.Point(4, 40);
+            this.OrdersTabPage.Name = "OrdersTabPage";
+            this.OrdersTabPage.Padding = new System.Windows.Forms.Padding(8);
+            this.OrdersTabPage.Size = new System.Drawing.Size(1008, 592);
+            this.OrdersTabPage.TabIndex = 1;
+            this.OrdersTabPage.Text = "Заказы";
             // HeaderLayout
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.HeaderLayout.ColumnCount = 3;
@@ -197,7 +184,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1040, 760);
             this.Controls.Add(this.ContentPanel);
-            this.Controls.Add(this.NavigationLayout);
             this.Controls.Add(this.HeaderLayout);
             this.Font = new System.Drawing.Font("Calibri", 12F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -207,8 +193,8 @@
             this.Text = "Чудо Обувь — Карточки";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ContentPanel.ResumeLayout(false);
-            this.NavigationLayout.ResumeLayout(false);
-            this.NavigationLayout.PerformLayout();
+            this.PagesTabControl.ResumeLayout(false);
+            this.CardsTabPage.ResumeLayout(false);
             this.HeaderLayout.ResumeLayout(false);
             this.HeaderLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
@@ -226,10 +212,9 @@
 
         private System.Windows.Forms.FlowLayoutPanel MainLayout;
         private System.Windows.Forms.Panel ContentPanel;
-        private System.Windows.Forms.Panel OrdersPanel;
-        private System.Windows.Forms.FlowLayoutPanel NavigationLayout;
-        private System.Windows.Forms.Button CardsButton;
-        private System.Windows.Forms.Button OrdersButton;
+        private System.Windows.Forms.TabControl PagesTabControl;
+        private System.Windows.Forms.TabPage CardsTabPage;
+        private System.Windows.Forms.TabPage OrdersTabPage;
         private System.Windows.Forms.TableLayoutPanel HeaderLayout;
         private System.Windows.Forms.Label WindowTitleLabel;
         private System.Windows.Forms.PictureBox LogoPictureBox;

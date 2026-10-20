@@ -59,24 +59,18 @@ namespace WindowsFormsApp1
             productsPresenter_.Update();
         }
 
-        private void CardsButton_Click(object sender, EventArgs e)
+        private void PagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MainLayout.Visible = true;
-            OrdersPanel.Visible = false;
-            CardsButton.BackColor = Color.FromArgb(112, 178, 175);
-            OrdersButton.BackColor = Color.FromArgb(210, 246, 231);
-            WindowTitleLabel.Text = "Карточки товаров";
-            Text = "Чудо Обувь — Карточки";
-        }
-
-        private void OrdersButton_Click(object sender, EventArgs e)
-        {
-            MainLayout.Visible = false;
-            OrdersPanel.Visible = true;
-            CardsButton.BackColor = Color.FromArgb(210, 246, 231);
-            OrdersButton.BackColor = Color.FromArgb(112, 178, 175);
-            WindowTitleLabel.Text = "Заказы";
-            Text = "Чудо Обувь — Заказы";
+            if (PagesTabControl.SelectedTab == CardsTabPage)
+            {
+                WindowTitleLabel.Text = "Карточки товаров";
+                Text = "Чудо Обувь — Карточки";
+            }
+            else
+            {
+                WindowTitleLabel.Text = "Заказы";
+                Text = "Чудо Обувь — Заказы";
+            }
         }
 
         private void UserStatusPictureBox_Paint(object sender, PaintEventArgs e)

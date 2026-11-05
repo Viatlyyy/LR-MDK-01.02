@@ -22,6 +22,7 @@ namespace WindowsFormsApp1
         public MainForm(IOrdersRepository ordersRepository) : this()
         {
             ordersRepository_ = ordersRepository;
+            Load += MainForm_Load;
         }
 
         [Browsable(false)]
@@ -30,11 +31,6 @@ namespace WindowsFormsApp1
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            if (DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-            {
-                return;
-            }
-
             if (CurrentUser != null)
             {
                 UserNameLabel.Text = CurrentUser.FullName;

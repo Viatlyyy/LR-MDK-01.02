@@ -2,6 +2,7 @@
 using DemoLib.Presenters;
 using DemoLib.Repositories;
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -11,17 +12,12 @@ namespace WindowsFormsApp1
     // акцентир #70B2AF
     public partial class MainForm : Form
     {
-        private ProductsPresenter productsPresenter_;
-        private ProductsModel model_ = new ProductsModel();
         private IOrdersRepository ordersRepository_;
         private bool productCardResizePending_;
 
         public MainForm()
         {
             InitializeComponent();
-
-            productsPresenter_ = new ProductsPresenter(model_);
-            MainLayout.ClientSizeChanged += MainLayout_ClientSizeChanged;
         }
 
         public MainForm(IOrdersRepository ordersRepository) : this()
@@ -29,10 +25,17 @@ namespace WindowsFormsApp1
             ordersRepository_ = ordersRepository;
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public User CurrentUser { get; set; }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
+            if (IsInDesignMode())
+            {
+                return;
+            }
+
             if (CurrentUser != null)
             {
                 UserNameLabel.Text = CurrentUser.FullName;
@@ -46,23 +49,30 @@ namespace WindowsFormsApp1
                 OrdersTabPage.Dispose();
             }
 
-            // До подключения репозитория показываем исходные цены, а не считаем заказы пустыми.
+            ProductsModel model = new ProductsModel();
+            ProductsPresenter productsPresenter = new ProductsPresenter(model);
             if (ordersRepository_ != null)
             {
-                model_.UpdatePrices(ordersRepository_);
+                model.UpdatePrices(ordersRepository_);
             }
 
-            int countProducts = model_.GetCountProducts();
+            int countProducts = model.GetCountProducts();
             for (int i = 0; i < countProducts; i++)
             {
                 DemoUIComponents.ProductCard card = new DemoUIComponents.ProductCard();
                 MainLayout.Controls.Add(card);
 
-                productsPresenter_.AddView(card);
+                productsPresenter.AddView(card);
             }
 
-            productsPresenter_.Update();
+            productsPresenter.Update();
+            MainLayout.ClientSizeChanged += MainLayout_ClientSizeChanged;
             ResizeProductCards();
+        }
+
+        private bool IsInDesignMode()
+        {
+            return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
         }
 
         private void MainLayout_ClientSizeChanged(object sender, EventArgs e)
@@ -72,7 +82,7 @@ namespace WindowsFormsApp1
 
         private void QueueProductCardResize()
         {
-            if (productCardResizePending_ || !IsHandleCreated || IsDisposed || Disposing)
+            if (IsInDesignMode() || productCardResizePending_ || !IsHandleCreated || IsDisposed || Disposing)
             {
                 return;
             }

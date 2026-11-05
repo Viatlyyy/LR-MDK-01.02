@@ -2,6 +2,7 @@ using DemoLib.Models;
 using DemoLib.Presenters;
 using DemoLib.Views;
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -13,21 +14,23 @@ namespace WindowsFormsApp1
         public LoginForm()
         {
             InitializeComponent();
-            authorizationPresenter_ = new AuthorizationPresenter(new Authorization(), this);
         }
 
-        public LoginForm(IAuthorization authorization)
+        public LoginForm(IAuthorization authorization) : this()
         {
-            InitializeComponent();
             authorizationPresenter_ = new AuthorizationPresenter(authorization, this);
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Login
         {
             get { return LoginTextBox.Text; }
             set { LoginTextBox.Text = value; }
         }
 
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public User AuthorizedUser { get; set; }
 
         public void ShowError(string message)
@@ -45,6 +48,11 @@ namespace WindowsFormsApp1
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
+            if (authorizationPresenter_ == null)
+            {
+                authorizationPresenter_ = new AuthorizationPresenter(new Authorization(), this);
+            }
+
             authorizationPresenter_.Authorize();
         }
 

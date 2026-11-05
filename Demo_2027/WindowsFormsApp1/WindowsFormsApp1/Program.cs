@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
             IAuthorization authorization = new Authorization();
             using (LoginForm loginForm = new LoginForm(authorization))
             {
-                if (loginForm.ShowDialog() != DialogResult.OK || loginForm.AuthorizedUser == null)
+                if (loginForm.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }

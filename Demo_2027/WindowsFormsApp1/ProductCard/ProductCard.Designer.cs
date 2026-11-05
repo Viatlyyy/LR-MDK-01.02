@@ -73,34 +73,37 @@
             // 
             // CategoryLabel
             // 
-            this.CategoryLabel.AutoSize = true;
+            this.CategoryLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.CategoryLabel.AutoEllipsis = true;
             this.CategoryLabel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CategoryLabel.ForeColor = System.Drawing.Color.Black;
             this.CategoryLabel.Location = new System.Drawing.Point(404, 79);
             this.CategoryLabel.Name = "CategoryLabel";
-            this.CategoryLabel.Size = new System.Drawing.Size(69, 26);
+            this.CategoryLabel.Size = new System.Drawing.Size(274, 26);
             this.CategoryLabel.TabIndex = 3;
             this.CategoryLabel.Text = "label 3";
             // 
             // CountLabel
             // 
-            this.CountLabel.AutoSize = true;
+            this.CountLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.CountLabel.AutoEllipsis = true;
             this.CountLabel.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CountLabel.ForeColor = System.Drawing.Color.Black;
             this.CountLabel.Location = new System.Drawing.Point(404, 105);
             this.CountLabel.Name = "CountLabel";
-            this.CountLabel.Size = new System.Drawing.Size(56, 23);
+            this.CountLabel.Size = new System.Drawing.Size(274, 23);
             this.CountLabel.TabIndex = 4;
             this.CountLabel.Text = "label4";
             // 
             // PartsLabel
             // 
-            this.PartsLabel.AutoSize = true;
+            this.PartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.PartsLabel.AutoEllipsis = true;
             this.PartsLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PartsLabel.ForeColor = System.Drawing.Color.Black;
             this.PartsLabel.Location = new System.Drawing.Point(404, 128);
             this.PartsLabel.Name = "PartsLabel";
-            this.PartsLabel.Size = new System.Drawing.Size(49, 19);
+            this.PartsLabel.Size = new System.Drawing.Size(458, 44);
             this.PartsLabel.TabIndex = 5;
             this.PartsLabel.Text = "label5";
             // 
@@ -109,20 +112,19 @@
             this.ImagePictureBox.Location = new System.Drawing.Point(16, 15);
             this.ImagePictureBox.Name = "ImagePictureBox";
             this.ImagePictureBox.Size = new System.Drawing.Size(217, 142);
-            this.ImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ImagePictureBox.TabIndex = 6;
             this.ImagePictureBox.TabStop = false;
             // 
             // SupplierLabel
             // 
+            this.SupplierLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.SupplierLabel.AutoEllipsis = true;
-            this.SupplierLabel.AutoSize = true;
             this.SupplierLabel.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SupplierLabel.ForeColor = System.Drawing.Color.Black;
-            this.SupplierLabel.Location = new System.Drawing.Point(295, 15);
-            this.SupplierLabel.MaximumSize = new System.Drawing.Size(500, 0);
+            this.SupplierLabel.Location = new System.Drawing.Point(239, 15);
             this.SupplierLabel.Name = "SupplierLabel";
-            this.SupplierLabel.Size = new System.Drawing.Size(158, 29);
+            this.SupplierLabel.Size = new System.Drawing.Size(623, 60);
             this.SupplierLabel.TabIndex = 8;
             this.SupplierLabel.Text = "Производство";
             // 

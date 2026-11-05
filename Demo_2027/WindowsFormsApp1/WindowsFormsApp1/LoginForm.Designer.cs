@@ -23,6 +23,7 @@ namespace WindowsFormsApp1
             this.LoginLabel = new System.Windows.Forms.Label();
             this.LoginTextBox = new System.Windows.Forms.TextBox();
             this.LoginButton = new System.Windows.Forms.Button();
+            this.GuestLoginButton = new System.Windows.Forms.Button();
             this.CancelLoginButton = new System.Windows.Forms.Button();
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.HeaderPanel.SuspendLayout();
@@ -73,21 +74,33 @@ namespace WindowsFormsApp1
             this.LoginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LoginButton.Location = new System.Drawing.Point(24, 202);
             this.LoginButton.Name = "LoginButton";
-            this.LoginButton.Size = new System.Drawing.Size(194, 42);
+            this.LoginButton.Size = new System.Drawing.Size(110, 42);
             this.LoginButton.TabIndex = 1;
             this.LoginButton.Text = "Войти";
             this.LoginButton.UseVisualStyleBackColor = false;
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
+            // GuestLoginButton
+            this.GuestLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
+            this.GuestLoginButton.CausesValidation = false;
+            this.GuestLoginButton.FlatAppearance.BorderSize = 0;
+            this.GuestLoginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GuestLoginButton.Location = new System.Drawing.Point(144, 202);
+            this.GuestLoginButton.Name = "GuestLoginButton";
+            this.GuestLoginButton.Size = new System.Drawing.Size(168, 42);
+            this.GuestLoginButton.TabIndex = 2;
+            this.GuestLoginButton.Text = "Войти как гость";
+            this.GuestLoginButton.UseVisualStyleBackColor = false;
+            this.GuestLoginButton.Click += new System.EventHandler(this.GuestLoginButton_Click);
             // CancelLoginButton
             this.CancelLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.CancelLoginButton.CausesValidation = false;
             this.CancelLoginButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CancelLoginButton.FlatAppearance.BorderSize = 0;
             this.CancelLoginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelLoginButton.Location = new System.Drawing.Point(228, 202);
+            this.CancelLoginButton.Location = new System.Drawing.Point(322, 202);
             this.CancelLoginButton.Name = "CancelLoginButton";
-            this.CancelLoginButton.Size = new System.Drawing.Size(194, 42);
-            this.CancelLoginButton.TabIndex = 2;
+            this.CancelLoginButton.Size = new System.Drawing.Size(100, 42);
+            this.CancelLoginButton.TabIndex = 3;
             this.CancelLoginButton.Text = "Отмена";
             this.CancelLoginButton.UseVisualStyleBackColor = false;
             // ErrorLabel
@@ -104,6 +117,7 @@ namespace WindowsFormsApp1
             this.ClientSize = new System.Drawing.Size(446, 328);
             this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.CancelLoginButton);
+            this.Controls.Add(this.GuestLoginButton);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.LoginTextBox);
             this.Controls.Add(this.LoginLabel);
@@ -129,6 +143,7 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label LoginLabel;
         private System.Windows.Forms.TextBox LoginTextBox;
         private System.Windows.Forms.Button LoginButton;
+        private System.Windows.Forms.Button GuestLoginButton;
         private System.Windows.Forms.Button CancelLoginButton;
         private System.Windows.Forms.Label ErrorLabel;
     }

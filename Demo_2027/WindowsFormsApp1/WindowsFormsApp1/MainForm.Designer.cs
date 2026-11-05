@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.MainLayout = new System.Windows.Forms.Panel();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.PagesTabControl = new System.Windows.Forms.TabControl();
             this.CardsTabPage = new System.Windows.Forms.TabPage();
@@ -37,9 +37,7 @@
             this.HeaderLayout = new System.Windows.Forms.TableLayoutPanel();
             this.WindowTitleLabel = new System.Windows.Forms.Label();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
-            this.UserInfoPanel = new System.Windows.Forms.Panel();
             this.UserAvatarPictureBox = new System.Windows.Forms.PictureBox();
-            this.UserTextLayout = new System.Windows.Forms.TableLayoutPanel();
             this.UserNameLabel = new System.Windows.Forms.Label();
             this.UserRoleLabel = new System.Windows.Forms.Label();
             this.ContentPanel.SuspendLayout();
@@ -47,9 +45,7 @@
             this.CardsTabPage.SuspendLayout();
             this.HeaderLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
-            this.UserInfoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserAvatarPictureBox)).BeginInit();
-            this.UserTextLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainLayout
@@ -57,12 +53,10 @@
             this.MainLayout.AutoScroll = true;
             this.MainLayout.BackColor = System.Drawing.Color.White;
             this.MainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainLayout.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.MainLayout.Location = new System.Drawing.Point(4, 4);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.Size = new System.Drawing.Size(1000, 584);
             this.MainLayout.TabIndex = 0;
-            this.MainLayout.WrapContents = false;
             // ContentPanel
             this.ContentPanel.BackColor = System.Drawing.Color.White;
             this.ContentPanel.Controls.Add(this.PagesTabControl);
@@ -103,19 +97,23 @@
             this.OrdersTabPage.Text = "Заказы";
             // HeaderLayout
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
-            this.HeaderLayout.ColumnCount = 3;
+            this.HeaderLayout.ColumnCount = 4;
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.HeaderLayout.Controls.Add(this.WindowTitleLabel, 0, 0);
             this.HeaderLayout.Controls.Add(this.LogoPictureBox, 1, 0);
-            this.HeaderLayout.Controls.Add(this.UserInfoPanel, 2, 0);
+            this.HeaderLayout.Controls.Add(this.UserNameLabel, 2, 0);
+            this.HeaderLayout.Controls.Add(this.UserRoleLabel, 2, 1);
+            this.HeaderLayout.Controls.Add(this.UserAvatarPictureBox, 3, 0);
             this.HeaderLayout.Dock = System.Windows.Forms.DockStyle.Top;
             this.HeaderLayout.Location = new System.Drawing.Point(0, 0);
             this.HeaderLayout.Name = "HeaderLayout";
             this.HeaderLayout.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
-            this.HeaderLayout.RowCount = 1;
-            this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.HeaderLayout.RowCount = 2;
+            this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.HeaderLayout.Size = new System.Drawing.Size(1040, 100);
             this.HeaderLayout.TabIndex = 0;
             // WindowTitleLabel
@@ -123,7 +121,8 @@
             this.WindowTitleLabel.Font = new System.Drawing.Font("Calibri", 22F, System.Drawing.FontStyle.Bold);
             this.WindowTitleLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindowTitleLabel.Name = "WindowTitleLabel";
-            this.WindowTitleLabel.Size = new System.Drawing.Size(408, 84);
+            this.HeaderLayout.SetRowSpan(this.WindowTitleLabel, 2);
+            this.WindowTitleLabel.Size = new System.Drawing.Size(379, 84);
             this.WindowTitleLabel.Text = "Карточки товаров";
             this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // LogoPictureBox
@@ -131,36 +130,20 @@
             this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.LogoPictureBox.Name = "LogoPictureBox";
+            this.HeaderLayout.SetRowSpan(this.LogoPictureBox, 2);
             this.LogoPictureBox.Size = new System.Drawing.Size(84, 84);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabStop = false;
-            // UserInfoPanel
-            this.UserInfoPanel.Controls.Add(this.UserTextLayout);
-            this.UserInfoPanel.Controls.Add(this.UserAvatarPictureBox);
-            this.UserInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UserInfoPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.UserInfoPanel.Name = "UserInfoPanel";
-            this.UserInfoPanel.Size = new System.Drawing.Size(500, 84);
             // UserAvatarPictureBox
             this.UserAvatarPictureBox.AccessibleName = "Профиль пользователя";
-            this.UserAvatarPictureBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.UserAvatarPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserAvatarPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("UserAvatarPictureBox.Image")));
             this.UserAvatarPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.UserAvatarPictureBox.Name = "UserAvatarPictureBox";
+            this.HeaderLayout.SetRowSpan(this.UserAvatarPictureBox, 2);
             this.UserAvatarPictureBox.Size = new System.Drawing.Size(64, 84);
             this.UserAvatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.UserAvatarPictureBox.TabStop = false;
-            // UserTextLayout
-            this.UserTextLayout.ColumnCount = 1;
-            this.UserTextLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.UserTextLayout.Controls.Add(this.UserNameLabel, 0, 0);
-            this.UserTextLayout.Controls.Add(this.UserRoleLabel, 0, 1);
-            this.UserTextLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UserTextLayout.Name = "UserTextLayout";
-            this.UserTextLayout.RowCount = 2;
-            this.UserTextLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.UserTextLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.UserTextLayout.Size = new System.Drawing.Size(436, 84);
             // UserNameLabel
             this.UserNameLabel.AutoEllipsis = true;
             this.UserNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -201,10 +184,6 @@
             this.HeaderLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UserAvatarPictureBox)).EndInit();
-            this.UserInfoPanel.ResumeLayout(false);
-            this.UserInfoPanel.PerformLayout();
-            this.UserTextLayout.ResumeLayout(false);
-            this.UserTextLayout.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,7 +191,7 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel MainLayout;
+        private System.Windows.Forms.Panel MainLayout;
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.TabControl PagesTabControl;
         private System.Windows.Forms.TabPage CardsTabPage;
@@ -220,9 +199,7 @@
         private System.Windows.Forms.TableLayoutPanel HeaderLayout;
         private System.Windows.Forms.Label WindowTitleLabel;
         private System.Windows.Forms.PictureBox LogoPictureBox;
-        private System.Windows.Forms.Panel UserInfoPanel;
         private System.Windows.Forms.PictureBox UserAvatarPictureBox;
-        private System.Windows.Forms.TableLayoutPanel UserTextLayout;
         private System.Windows.Forms.Label UserNameLabel;
         private System.Windows.Forms.Label UserRoleLabel;
     }

@@ -56,12 +56,6 @@ namespace WindowsFormsApp1
             authorizationPresenter_.Authorize();
         }
 
-        private void GuestLoginButton_Click(object sender, EventArgs e)
-        {
-            AuthorizedUser = null;
-            DialogResult = DialogResult.OK;
-        }
-
         private void LoginTextBox_TextChanged(object sender, EventArgs e)
         {
             ErrorLabel.Text = "";

@@ -82,6 +82,7 @@ namespace WindowsFormsApp1
             // GuestLoginButton
             this.GuestLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.GuestLoginButton.CausesValidation = false;
+            this.GuestLoginButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.GuestLoginButton.FlatAppearance.BorderSize = 0;
             this.GuestLoginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GuestLoginButton.Location = new System.Drawing.Point(144, 202);
@@ -90,7 +91,6 @@ namespace WindowsFormsApp1
             this.GuestLoginButton.TabIndex = 2;
             this.GuestLoginButton.Text = "Войти как гость";
             this.GuestLoginButton.UseVisualStyleBackColor = false;
-            this.GuestLoginButton.Click += new System.EventHandler(this.GuestLoginButton_Click);
             // CancelLoginButton
             this.CancelLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.CancelLoginButton.CausesValidation = false;

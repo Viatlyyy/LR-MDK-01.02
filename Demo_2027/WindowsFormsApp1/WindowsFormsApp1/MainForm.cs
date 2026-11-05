@@ -22,14 +22,13 @@ namespace WindowsFormsApp1
         public MainForm(IOrdersRepository ordersRepository) : this()
         {
             ordersRepository_ = ordersRepository;
-            Load += MainForm_Load;
         }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public User CurrentUser { get; set; }
 
-        private void MainForm_Load(object sender, System.EventArgs e)
+        private void MainForm_Shown(object sender, EventArgs e)
         {
             if (CurrentUser != null)
             {

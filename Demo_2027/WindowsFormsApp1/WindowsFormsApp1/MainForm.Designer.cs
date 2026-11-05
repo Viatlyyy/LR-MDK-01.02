@@ -178,6 +178,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Чудо Обувь — Карточки";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ContentPanel.ResumeLayout(false);
             this.PagesTabControl.ResumeLayout(false);
             this.CardsTabPage.ResumeLayout(false);

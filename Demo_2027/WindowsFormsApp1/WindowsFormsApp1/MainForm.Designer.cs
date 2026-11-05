@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainLayout = new System.Windows.Forms.Panel();
+            this.MainLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.PagesTabControl = new System.Windows.Forms.TabControl();
             this.CardsTabPage = new System.Windows.Forms.TabPage();
@@ -53,10 +53,12 @@
             this.MainLayout.AutoScroll = true;
             this.MainLayout.BackColor = System.Drawing.Color.White;
             this.MainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainLayout.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
             this.MainLayout.Location = new System.Drawing.Point(4, 4);
             this.MainLayout.Name = "MainLayout";
             this.MainLayout.Size = new System.Drawing.Size(1000, 584);
             this.MainLayout.TabIndex = 0;
+            this.MainLayout.WrapContents = true;
             // ContentPanel
             this.ContentPanel.BackColor = System.Drawing.Color.White;
             this.ContentPanel.Controls.Add(this.PagesTabControl);
@@ -150,7 +152,7 @@
             this.UserNameLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.UserNameLabel.Margin = new System.Windows.Forms.Padding(0, 0, 8, 4);
             this.UserNameLabel.Name = "UserNameLabel";
-            this.UserNameLabel.Text = "Фамилия Имя Отчество";
+            this.UserNameLabel.Text = "Гость";
             this.UserNameLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // UserRoleLabel
             this.UserRoleLabel.AutoEllipsis = true;
@@ -159,7 +161,7 @@
             this.UserRoleLabel.ForeColor = System.Drawing.Color.FromArgb(65, 85, 80);
             this.UserRoleLabel.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.UserRoleLabel.Name = "UserRoleLabel";
-            this.UserRoleLabel.Text = "Пользователь";
+            this.UserRoleLabel.Text = "Гостевой режим";
             this.UserRoleLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // MainForm
@@ -191,7 +193,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel MainLayout;
+        private System.Windows.Forms.FlowLayoutPanel MainLayout;
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.TabControl PagesTabControl;
         private System.Windows.Forms.TabPage CardsTabPage;

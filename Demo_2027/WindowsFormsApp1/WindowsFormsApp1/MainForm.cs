@@ -40,13 +40,6 @@ namespace WindowsFormsApp1
                 UserNameLabel.Text = CurrentUser.FullName;
                 UserRoleLabel.Text = CurrentUser.Role;
             }
-            else
-            {
-                UserNameLabel.Text = "Гость";
-                UserRoleLabel.Text = "Просмотр каталога";
-                PagesTabControl.TabPages.Remove(OrdersTabPage);
-                OrdersTabPage.Dispose();
-            }
 
             ProductsModel model = new ProductsModel();
             ProductsPresenter productsPresenter = new ProductsPresenter(model);
@@ -59,9 +52,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < countProducts; i++)
             {
                 DemoUIComponents.ProductCard card = new DemoUIComponents.ProductCard();
-                card.Dock = DockStyle.Top;
                 MainLayout.Controls.Add(card);
-                card.BringToFront(); // При DockStyle.Top это помещает новую карточку под предыдущими.
 
                 productsPresenter.AddView(card);
             }

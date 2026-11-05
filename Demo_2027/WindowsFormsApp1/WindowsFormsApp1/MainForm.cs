@@ -3,6 +3,7 @@ using DemoLib.Presenters;
 using DemoLib.Repositories;
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -34,6 +35,9 @@ namespace WindowsFormsApp1
             {
                 UserNameLabel.Text = CurrentUser.FullName;
                 UserRoleLabel.Text = CurrentUser.Role;
+                ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
+                UserAvatarPictureBox.Image = resources.GetObject("Avatar." + CurrentUser.Login) as Image
+                    ?? UserAvatarPictureBox.Image;
             }
 
             ProductsModel model = new ProductsModel();
@@ -53,20 +57,6 @@ namespace WindowsFormsApp1
             }
 
             productsPresenter.Update();
-        }
-
-        private void PagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (PagesTabControl.SelectedTab == CardsTabPage)
-            {
-                WindowTitleLabel.Text = "Карточки товаров";
-                Text = "Чудо Обувь — Карточки";
-            }
-            else
-            {
-                WindowTitleLabel.Text = "Заказы";
-                Text = "Чудо Обувь — Заказы";
-            }
         }
 
     }

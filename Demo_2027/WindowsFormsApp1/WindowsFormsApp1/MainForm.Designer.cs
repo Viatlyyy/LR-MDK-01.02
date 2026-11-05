@@ -63,10 +63,10 @@
             this.ContentPanel.BackColor = System.Drawing.Color.White;
             this.ContentPanel.Controls.Add(this.PagesTabControl);
             this.ContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentPanel.Location = new System.Drawing.Point(0, 100);
+            this.ContentPanel.Location = new System.Drawing.Point(0, 144);
             this.ContentPanel.Name = "ContentPanel";
             this.ContentPanel.Padding = new System.Windows.Forms.Padding(12);
-            this.ContentPanel.Size = new System.Drawing.Size(1040, 660);
+            this.ContentPanel.Size = new System.Drawing.Size(1040, 616);
             this.ContentPanel.TabIndex = 2;
             // PagesTabControl
             this.PagesTabControl.Controls.Add(this.CardsTabPage);
@@ -79,7 +79,6 @@
             this.PagesTabControl.Size = new System.Drawing.Size(1016, 636);
             this.PagesTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.PagesTabControl.TabIndex = 0;
-            this.PagesTabControl.SelectedIndexChanged += new System.EventHandler(this.PagesTabControl_SelectedIndexChanged);
             // CardsTabPage
             this.CardsTabPage.BackColor = System.Drawing.Color.White;
             this.CardsTabPage.Controls.Add(this.MainLayout);
@@ -101,9 +100,9 @@
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.HeaderLayout.ColumnCount = 4;
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.HeaderLayout.Controls.Add(this.WindowTitleLabel, 0, 0);
             this.HeaderLayout.Controls.Add(this.LogoPictureBox, 1, 0);
             this.HeaderLayout.Controls.Add(this.UserNameLabel, 2, 0);
@@ -112,20 +111,20 @@
             this.HeaderLayout.Dock = System.Windows.Forms.DockStyle.Top;
             this.HeaderLayout.Location = new System.Drawing.Point(0, 0);
             this.HeaderLayout.Name = "HeaderLayout";
-            this.HeaderLayout.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
+            this.HeaderLayout.Padding = new System.Windows.Forms.Padding(20, 12, 20, 12);
             this.HeaderLayout.RowCount = 2;
             this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.HeaderLayout.Size = new System.Drawing.Size(1040, 100);
+            this.HeaderLayout.Size = new System.Drawing.Size(1040, 144);
             this.HeaderLayout.TabIndex = 0;
             // WindowTitleLabel
             this.WindowTitleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WindowTitleLabel.Font = new System.Drawing.Font("Calibri", 22F, System.Drawing.FontStyle.Bold);
+            this.WindowTitleLabel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold);
             this.WindowTitleLabel.Margin = new System.Windows.Forms.Padding(0);
             this.WindowTitleLabel.Name = "WindowTitleLabel";
             this.HeaderLayout.SetRowSpan(this.WindowTitleLabel, 2);
-            this.WindowTitleLabel.Size = new System.Drawing.Size(379, 84);
-            this.WindowTitleLabel.Text = "Карточки товаров";
+            this.WindowTitleLabel.Size = new System.Drawing.Size(328, 120);
+            this.WindowTitleLabel.Text = "ООО «Чудо Обувь»";
             this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // LogoPictureBox
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -133,7 +132,7 @@
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.LogoPictureBox.Name = "LogoPictureBox";
             this.HeaderLayout.SetRowSpan(this.LogoPictureBox, 2);
-            this.LogoPictureBox.Size = new System.Drawing.Size(84, 84);
+            this.LogoPictureBox.Size = new System.Drawing.Size(144, 120);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabStop = false;
             // UserAvatarPictureBox
@@ -143,7 +142,7 @@
             this.UserAvatarPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.UserAvatarPictureBox.Name = "UserAvatarPictureBox";
             this.HeaderLayout.SetRowSpan(this.UserAvatarPictureBox, 2);
-            this.UserAvatarPictureBox.Size = new System.Drawing.Size(64, 84);
+            this.UserAvatarPictureBox.Size = new System.Drawing.Size(112, 120);
             this.UserAvatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.UserAvatarPictureBox.TabStop = false;
             // UserNameLabel
@@ -177,7 +176,7 @@
             this.MinimumSize = new System.Drawing.Size(960, 620);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Чудо Обувь — Карточки";
+            this.Text = "ООО «Чудо Обувь»";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ContentPanel.ResumeLayout(false);
             this.PagesTabControl.ResumeLayout(false);

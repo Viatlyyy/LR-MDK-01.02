@@ -73,6 +73,26 @@
     <None Include="App.config" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\UserAvatar.png" />
+    <Content Include="Images\Avatars\aalekseev.png" />
+    <Content Include="Images\Avatars\afedorov.png" />
+    <Content Include="Images\Avatars\apopov.png" />
+    <Content Include="Images\Avatars\asidorova.png" />
+    <Content Include="Images\Avatars\dsmirnov.png" />
+    <Content Include="Images\Avatars\ekuznetsova.png" />
+    <Content Include="Images\Avatars\epavlova.png" />
+    <Content Include="Images\Avatars\ilebedeva.png" />
+    <Content Include="Images\Avatars\isivanov.png" />
+    <Content Include="Images\Avatars\jvolkova.png" />
+    <Content Include="Images\Avatars\negorov.png" />
+    <Content Include="Images\Avatars\nnovikova.png" />
+    <Content Include="Images\Avatars\ovasileva.png" />
+    <Content Include="Images\Avatars\papetrov.png" />
+    <Content Include="Images\Avatars\psokolov.png" />
+    <Content Include="Images\Avatars\rkozlov.png" />
+    <Content Include="Images\Avatars\smorozov.png" />
+    <Content Include="Images\Avatars\tmikhailova.png" />
+    <Content Include="Images\Avatars\vnikolaev.png" />
+    <Content Include="Images\Avatars\vstepanova.png" />
     <Content Include="Images\App.ico" />
   </ItemGroup>
   <ItemGroup>

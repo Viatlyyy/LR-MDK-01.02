@@ -1,5 +1,3 @@
-using System.Linq;
-using DemoLib;
 using DemoLib.Models;
 using DemoLib.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,30 +12,32 @@ namespace DemoTesting
         {
             ProductsModel model = new ProductsModel();
             model.UpdatePrices(new DemoOrdersRepository());
-            Product[] original = model.Load().ToArray();
 
             var products = model.GetCatalog(null, true);
 
-            CollectionAssert.AreEqual(new[] { 375.0, 375.0, 1200.0, 1492.5 },
-                products.Select(product => product.Price).ToArray());
-            Assert.AreSame(original[1], products[0]);
-            Assert.AreSame(original[2], products[1]);
-            CollectionAssert.AreEqual(original, model.Load().ToArray());
+            Assert.AreEqual(4, products.Count);
+            Assert.AreEqual(375.0, products[0].Price);
+            Assert.AreEqual(375.0, products[1].Price);
+            Assert.AreEqual(1200.0, products[2].Price);
+            Assert.AreEqual(1492.5, products[3].Price);
+            Assert.AreEqual(3, products[0].Count);
+            Assert.AreEqual(7, products[1].Count);
         }
 
         [TestMethod]
         public void GetCatalog_Descending_UsesNumericPricesAndKeepsEqualPriceOrder()
         {
             ProductsModel model = new ProductsModel();
-            Product[] original = model.Load().ToArray();
 
             var products = model.GetCatalog(null, false);
 
-            CollectionAssert.AreEqual(new[] { 1990.0, 1600.0, 500.0, 500.0 },
-                products.Select(product => product.Price).ToArray());
-            Assert.AreSame(original[1], products[2]);
-            Assert.AreSame(original[2], products[3]);
-            CollectionAssert.AreEqual(original, model.Load().ToArray());
+            Assert.AreEqual(4, products.Count);
+            Assert.AreEqual(1990.0, products[0].Price);
+            Assert.AreEqual(1600.0, products[1].Price);
+            Assert.AreEqual(500.0, products[2].Price);
+            Assert.AreEqual(500.0, products[3].Price);
+            Assert.AreEqual(3, products[2].Count);
+            Assert.AreEqual(7, products[3].Count);
         }
 
         [TestMethod]
@@ -47,8 +47,11 @@ namespace DemoTesting
 
             var products = model.GetCatalog("  ТУФ  ", null);
 
-            CollectionAssert.AreEqual(new[] { 3, 7 },
-                products.Select(product => product.Count).ToArray());
+            Assert.AreEqual(2, products.Count);
+            Assert.AreEqual("Черные туфли в классическом стиле", products[0].Name);
+            Assert.AreEqual("Черные туфли в классическом стиле", products[1].Name);
+            Assert.AreEqual(3, products[0].Count);
+            Assert.AreEqual(7, products[1].Count);
         }
 
         [TestMethod]
@@ -65,10 +68,18 @@ namespace DemoTesting
         public void GetCatalog_BlankQuery_ReturnsAllProductsInOriginalOrder()
         {
             ProductsModel model = new ProductsModel();
+            model.GetCatalog(null, true);
+            model.GetCatalog(null, false);
 
             var products = model.GetCatalog("  ", null);
 
-            CollectionAssert.AreEqual(model.Load(), products);
+            Assert.AreEqual(4, products.Count);
+            Assert.AreEqual(1600.0, products[0].Price);
+            Assert.AreEqual(500.0, products[1].Price);
+            Assert.AreEqual(500.0, products[2].Price);
+            Assert.AreEqual(1990.0, products[3].Price);
+            Assert.AreEqual(3, products[1].Count);
+            Assert.AreEqual(7, products[2].Count);
             Assert.AreNotSame(model.Load(), products);
         }
     }

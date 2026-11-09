@@ -1,4 +1,4 @@
-﻿using DemoLib.Models;
+using DemoLib.Models;
 using DemoLib.Presenters;
 using DemoLib.Repositories;
 using System;
@@ -33,7 +33,11 @@ namespace WindowsFormsApp1
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            CatalogToolsPanel.Visible = CurrentUser != null;
+            if (SortComboBox.SelectedIndex < 0)
+            {
+                SortComboBox.SelectedIndex = 0;
+            }
+
             if (CurrentUser != null)
             {
                 UserNameLabel.Text = CurrentUser.FullName;
@@ -59,7 +63,7 @@ namespace WindowsFormsApp1
                 productsPresenter_.AddView(card);
             }
 
-            productsPresenter_.Update();
+            UpdateCatalog(null);
         }
 
         private bool? GetSortDirection()
@@ -77,19 +81,19 @@ namespace WindowsFormsApp1
 
         private void UpdateCatalog(string namePart)
         {
-            if (productsPresenter_ == null || CurrentUser == null)
+            if (productsPresenter_ == null)
             {
                 return;
             }
 
-            MainLayout.SuspendLayout();
             try
             {
                 productsPresenter_.Update(namePart, GetSortDirection());
             }
-            finally
+            catch (Exception error)
             {
-                MainLayout.ResumeLayout();
+                MessageBox.Show(this, "Не удалось обновить каталог.\n" + error.Message,
+                    "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,13 +104,21 @@ namespace WindowsFormsApp1
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            if (productsPresenter_ == null || CurrentUser == null)
+            if (productsPresenter_ == null)
             {
                 return;
             }
 
-            MessageBox.Show(this, BuildSearchMessage(SearchTextBox.Text),
-                "Результаты поиска", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                MessageBox.Show(this, BuildSearchMessage(SearchTextBox.Text),
+                    "Результаты поиска", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(this, "Не удалось выполнить поиск.\n" + error.Message,
+                    "Ошибка поиска", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)

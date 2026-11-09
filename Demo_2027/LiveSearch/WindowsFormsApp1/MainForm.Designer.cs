@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class MainForm
     {
@@ -110,7 +110,6 @@
             this.CatalogToolsPanel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 6);
             this.CatalogToolsPanel.Size = new System.Drawing.Size(1000, 43);
             this.CatalogToolsPanel.TabIndex = 0;
-            this.CatalogToolsPanel.Visible = false;
             // CatalogSortLabel
             this.CatalogSortLabel.AutoSize = true;
             this.CatalogSortLabel.Margin = new System.Windows.Forms.Padding(3, 7, 3, 0);

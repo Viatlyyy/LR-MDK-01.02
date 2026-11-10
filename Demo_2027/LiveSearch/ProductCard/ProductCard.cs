@@ -1,4 +1,4 @@
-﻿using DemoLib;
+using DemoLib;
 using DemoLib.Views;
 using System;
 using System.Drawing;
@@ -7,9 +7,10 @@ using System.Windows.Forms;
 
 namespace DemoUIComponents
 {
-    public partial class ProductCard : System.Windows.Forms.UserControl, IProductsView
+    public partial class ProductCard : UserControl, IProductsView
     {
         private Product product_;
+        private Bitmap productImage_;
         private bool hovered_;
 
         private Color normalColor_ = ColorTranslator.FromHtml("#D2F6E7");
@@ -19,12 +20,9 @@ namespace DemoUIComponents
         public ProductCard()
         {
             InitializeComponent();
-            foreach(Control c in Controls)
-            {
-                c.MouseEnter += ProductCard_MouseEnter;
-                c.MouseLeave += ProductCard_MouseLeave;
-            }
-
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            Disposed += ProductCard_Disposed;
         }
 
         private string CountText()
@@ -66,32 +64,103 @@ namespace DemoUIComponents
         public void Show(Product product)
         {
             product_ = product;
-
             CategoryLabel.Text = product.Category;
-
             CountLabel.Text = CountText();
-
             PartsLabel.Text = product.Parts;
-            PriceProductLabel.Text = product.Price.ToString() + " руб.";
+            PriceProductLabel.Text = product.Price + " руб.";
             SupplierLabel.Text = product.Supplier + " | " + product.Name;
+            AccessibleName = SupplierLabel.Text;
+            AccessibleDescription = $"{label1.Text}: {CategoryLabel.Text}. {label2.Text}: {CountLabel.Text}. "
+                + $"{label3.Text}: {PartsLabel.Text}. {PriceProductLabel.Text}";
 
-            ImagePictureBox.ImageLocation = ImagePath();
+            Bitmap image = LoadProductImage();
+            productImage_?.Dispose();
+            productImage_ = image;
+
+            // The designer controls provide layout; the card paints their content together at runtime.
+            foreach (Control control in Controls)
+            {
+                control.Visible = false;
+            }
 
             BackColor = GetColor();
-
+            Invalidate();
         }
 
-        private void ProductCard_MouseEnter(object sender, EventArgs e)
+        private Bitmap LoadProductImage()
         {
+            try
+            {
+                using (Image source = Image.FromFile(ImagePath()))
+                {
+                    return new Bitmap(source);
+                }
+            }
+            catch (IOException)
+            {
+                return null;
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            if (product_ == null)
+            {
+                return;
+            }
+
+            Image image = productImage_ ?? ImagePictureBox.ErrorImage;
+            Rectangle area = ImagePictureBox.Bounds;
+            if (image != null && area.Width > 0 && area.Height > 0)
+            {
+                double scale = Math.Min((double)area.Width / image.Width, (double)area.Height / image.Height);
+                int width = Math.Max(1, (int)(image.Width * scale));
+                int height = Math.Max(1, (int)(image.Height * scale));
+                Rectangle destination = new Rectangle(
+                    area.Left + (area.Width - width) / 2, area.Top + (area.Height - height) / 2, width, height);
+                e.Graphics.DrawImage(image, destination, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+            }
+
+            DrawLabel(e.Graphics, SupplierLabel, TextFormatFlags.WordBreak);
+            DrawLabel(e.Graphics, label1, TextFormatFlags.SingleLine);
+            DrawLabel(e.Graphics, CategoryLabel, TextFormatFlags.SingleLine);
+            DrawLabel(e.Graphics, label2, TextFormatFlags.SingleLine);
+            DrawLabel(e.Graphics, CountLabel, TextFormatFlags.SingleLine);
+            DrawLabel(e.Graphics, label3, TextFormatFlags.SingleLine);
+            DrawLabel(e.Graphics, PartsLabel, TextFormatFlags.WordBreak);
+            DrawLabel(e.Graphics, PriceProductLabel, TextFormatFlags.SingleLine | TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
+            if (hovered_)
+            {
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, enteringColor_, ButtonBorderStyle.Solid);
+            }
+        }
+
+        private void DrawLabel(Graphics graphics, Label label, TextFormatFlags flags)
+        {
+            if (label.AutoEllipsis)
+            {
+                flags |= TextFormatFlags.EndEllipsis;
+            }
+
+            TextRenderer.DrawText(graphics, label.Text, label.Font, label.Bounds, label.ForeColor,
+                flags | TextFormatFlags.PreserveGraphicsClipping | TextFormatFlags.NoPrefix);
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
             SetHovered(true);
         }
 
-        private void ProductCard_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
-            if (!ClientRectangle.Contains(PointToClient(MousePosition)))
-            {
-                SetHovered(false);
-            }
+            base.OnMouseLeave(e);
+            SetHovered(false);
         }
 
         protected override void OnVisibleChanged(EventArgs e)
@@ -112,13 +181,9 @@ namespace DemoUIComponents
             }
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        private void ProductCard_Disposed(object sender, EventArgs e)
         {
-            base.OnPaint(e);
-            if (hovered_)
-            {
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, enteringColor_, ButtonBorderStyle.Solid);
-            }
+            productImage_?.Dispose();
         }
     }
 }

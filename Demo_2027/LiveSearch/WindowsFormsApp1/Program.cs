@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
+using System.Configuration;
 using System.Windows.Forms;
 using DemoLib.Repositories;
 using DemoLib.Models;
@@ -28,8 +26,14 @@ namespace WindowsFormsApp1
                 }
                 user = loginForm.AuthorizedUser;
             }
-            IOrdersRepository ordersRepository = new DemoOrdersRepository();
-            MainForm mainForm = new MainForm(ordersRepository);
+            string connectionString = Environment.GetEnvironmentVariable("CHUDO_OBUV_POSTGRES");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                connectionString = ConfigurationManager.ConnectionStrings["ChudoObuv"]?.ConnectionString;
+            }
+
+            IOrdersRepository ordersRepository = new PostgresOrdersRepository(connectionString);
+            MainForm mainForm = new MainForm(connectionString, ordersRepository);
             mainForm.CurrentUser = user;
             Application.Run(mainForm);
         }

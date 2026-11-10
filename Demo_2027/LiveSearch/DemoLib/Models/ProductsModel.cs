@@ -1,42 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DemoLib.Repositories;
+using Npgsql;
 
 namespace DemoLib.Models
 {
     public class ProductsModel : IProductsModel
     {
-        private List<Product> data_ = new List<Product>();
+        private List<Product> data_;
 
-        public ProductsModel()
+        public ProductsModel(string connectionString) : this(ReadProducts(connectionString))
         {
-            data_.Add(new Product { Name = "Женские босоножки «Черный кофе» со скульптурным каблуком", Category = "Кроссовки", Count = 10, Price = 1600.0, Supplier = "Топ-Топ", Parts = " 87% кожа, 11% текстиль, 2% синтетика" ,
-                ImagePath = "..\\..\\..\\Images\\IMG_WS_185528.png"
-            });
-            data_.Add(new Product { Name = "Черные туфли в классическом стиле", Category = "Туфли", Count = 3, Price = 500.0, Supplier = "Барбари", Parts = "натуральная кожа ",
-            ImagePath = "..\\..\\..\\Images\\IMG_MSho_190514.png"
-            });
-            data_.Add(new Product
+        }
+
+        public ProductsModel(IEnumerable<Product> products)
+        {
+            data_ = products.ToList();
+        }
+
+        private static List<Product> ReadProducts(string connectionString)
+        {
+            const string sql = @"
+                SELECT p.product_id, p.name, c.name, m.name, p.composition, p.price_kopecks,
+                       p.image_file_name, COALESCE(stock.quantity, 0), p.description
+                FROM chudo_obuv.products AS p
+                JOIN chudo_obuv.categories AS c ON c.category_id = p.category_id
+                JOIN chudo_obuv.manufacturers AS m ON m.manufacturer_id = p.manufacturer_id
+                LEFT JOIN (
+                    SELECT product_id, SUM(available_quantity) AS quantity
+                    FROM chudo_obuv.stock_items
+                    GROUP BY product_id
+                ) AS stock ON stock.product_id = p.product_id
+                ORDER BY p.product_id;";
+
+            List<Product> products = new List<Product>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
             {
-                Name = "Черные туфли в классическом стиле",
-                Category = "Туфли",
-                Count = 7,
-                Price = 500.0,
-                Supplier = "Барбари",
-                Parts = "натуральная кожа ",
-                ImagePath = ""
-            });
-            data_.Add(new Product
-            {
-                Name = "Кроссовки детские «Радуга» экокожа перфорированная",
-                Category = "Детская обувь",
-                Count = 60,
-                Price = 1990.0,
-                Supplier = "Лапушка",
-                Parts = "Верх — экокожа перфорированная, вставки — нейлон, стелька — ортопедическая с латексной подушкой, подошва — ЭВА",
-                ImagePath = "..\\..\\..\\Images\\IMG_KS_195222.png"
-            });
+                connection.Open();
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Category = reader.GetString(2),
+                            Supplier = reader.GetString(3),
+                            Parts = reader.GetString(4),
+                            Price = reader.GetInt32(5) / 100.0,
+                            ImagePath = reader.IsDBNull(6) ? null : Path.GetFileName(reader.GetString(6)),
+                            Count = checked((int)reader.GetInt64(7)),
+                            Description = reader.GetString(8)
+                        });
+                    }
+                }
+            }
+            return products;
         }
 
         public List<Product> Load()
@@ -50,8 +73,9 @@ namespace DemoLib.Models
             string query = (namePart ?? string.Empty).Trim();
             if (query.Length > 0)
             {
-                products = products.Where(product => product.Name != null &&
-                    product.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0);
+                products = products.Where(product =>
+                    product.Name?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    product.Description?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
             if (ascending.HasValue)
@@ -85,7 +109,8 @@ namespace DemoLib.Models
             List<Product> discountProducts = data_
                 .Where(product => !orders
                     .SelectMany(order => order.Items)
-                    .Any(item => item.ProductItem == product.Name
+                    .Any(item => item.Count > 0
+                        && (item.ProductId.HasValue ? item.ProductId.Value == product.Id : item.ProductItem == product.Name)
                         && item.SaleDate >= start
                         && item.SaleDate < end))
                 .ToList();

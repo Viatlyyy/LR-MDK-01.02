@@ -159,8 +159,6 @@
             this.Font = new System.Drawing.Font("Calibri", 12F);
             this.Name = "ProductCard";
             this.Size = new System.Drawing.Size(880, 180);
-            this.MouseLeave += new System.EventHandler(this.ProductCard_MouseLeave);
-            this.MouseEnter += new System.EventHandler(this.ProductCard_MouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -52,11 +52,14 @@
     <Compile Include="Presenters\AuthorizationPresenter.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Repositories\IOrdersRepository.cs" />
+    <Compile Include="Repositories\PostgresOrdersRepository.cs" />
     <Compile Include="Repositories\DemoOrdersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\IProductsView.cs" />
     <Compile Include="Views\IAuthorizationView.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="8.0.9" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

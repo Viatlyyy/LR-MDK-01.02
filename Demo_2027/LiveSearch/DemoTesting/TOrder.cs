@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using DemoLib;
 using DemoLib.Models;
@@ -11,6 +11,34 @@ namespace DemoTesting
     [TestClass]
     public class TOrder
     {
+        [TestMethod]
+        public void UpdatePrices_UsesProductIdAndPositiveQuantity()
+        {
+            Product sold = new Product { Id = 1, Name = "Туфли", Price = 1000.0 };
+            Product unsold = new Product { Id = 2, Name = "Туфли", Price = 1000.0 };
+            ProductsModel model = new ProductsModel(new List<Product> { sold, unsold });
+            DateTime today = DateTime.Today;
+            DateTime previousMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+            Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
+            repository.Setup(repo => repo.Load()).Returns(new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { ProductId = 1, Count = 1, SaleDate = previousMonth },
+                        new OrderItem { ProductId = 2, Count = 0, SaleDate = previousMonth }
+                    }
+                }
+            });
+
+            model.UpdatePrices(repository.Object);
+
+            Assert.AreEqual(1000.0, sold.Price);
+            Assert.AreEqual(750.0, unsold.Price);
+        }
+
+
         [TestMethod]
         public void UpdatePrices_LoadsOrdersFromRepositoryOnce_AndUsesThemForDiscount()
         {
@@ -31,8 +59,7 @@ namespace DemoTesting
             };
             Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
             repository.Setup(repo => repo.Load()).Returns(orders);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             model.Load().Add(soldProduct);
             model.Load().Add(unsoldProduct);
 
@@ -46,8 +73,7 @@ namespace DemoTesting
         [TestMethod]
         public void UpdatePrices_NullRepository_KeepsPrices()
         {
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
 
@@ -59,8 +85,7 @@ namespace DemoTesting
         [TestMethod]
         public void UpdatePrices_NoOrders_ReducesPriceBy25Percent()
         {
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
             Mock<IOrdersRepository> repository = new Mock<IOrdersRepository>();
@@ -77,8 +102,7 @@ namespace DemoTesting
             DateTime today = DateTime.Today;
             DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
             DateTime previousMonth = currentMonth.AddMonths(-1);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
             List<Order> orders = new List<Order>
@@ -104,8 +128,7 @@ namespace DemoTesting
         {
             DateTime today = DateTime.Today;
             DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
             List<Order> orders = new List<Order>
@@ -132,8 +155,7 @@ namespace DemoTesting
             DateTime today = DateTime.Today;
             DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
             DateTime previousMonth = currentMonth.AddMonths(-1);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             model.Load().Add(product);
             List<Order> orders = new List<Order>
@@ -167,8 +189,7 @@ namespace DemoTesting
             DateTime today = DateTime.Today;
             DateTime currentMonth = new DateTime(today.Year, today.Month, 1);
             DateTime previousMonth = currentMonth.AddMonths(-1);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product product = new Product { Name = "Товар A", Price = 1000.0 };
             Product other = new Product { Name = "Товар B", Price = 2000.0 };
             model.Load().Add(product);
@@ -200,8 +221,7 @@ namespace DemoTesting
             DateTime previousMonth = currentMonth.AddMonths(-1);
             DateTime twoMonthsAgo = currentMonth.AddMonths(-2);
             DateTime threeMonthsAgo = currentMonth.AddMonths(-3);
-            ProductsModel model = new ProductsModel();
-            model.Load().Clear();
+            ProductsModel model = new ProductsModel(new List<Product>());
             Product first = new Product { Name = "Товар A", Price = 1000.0 };
             Product second = new Product { Name = "Товар B", Price = 2000.0 };
             Product third = new Product { Name = "Товар C", Price = 3000.0 };

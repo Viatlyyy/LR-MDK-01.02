@@ -1,8 +1,9 @@
-using DemoLib.Models;
+﻿using DemoLib.Models;
 using DemoLib.Presenters;
 using DemoLib.Repositories;
 using System;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ namespace WindowsFormsApp1
     // акцентир #70B2AF
     public partial class MainForm : Form
     {
+        private string connectionString_;
         private IOrdersRepository ordersRepository_;
         private ProductsPresenter productsPresenter_;
 
@@ -21,8 +23,9 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        public MainForm(IOrdersRepository ordersRepository) : this()
+        public MainForm(string connectionString, IOrdersRepository ordersRepository) : this()
         {
+            connectionString_ = connectionString;
             ordersRepository_ = ordersRepository;
         }
 
@@ -33,7 +36,6 @@ namespace WindowsFormsApp1
         private void MainForm_Shown(object sender, EventArgs e)
         {
             CatalogToolsPanel.Visible = CurrentUser != null;
-
             if (SortComboBox.SelectedIndex < 0)
             {
                 SortComboBox.SelectedIndex = 0;
@@ -48,19 +50,32 @@ namespace WindowsFormsApp1
                     ?? UserAvatarPictureBox.Image;
             }
 
-            ProductsModel model = new ProductsModel();
-            if (ordersRepository_ != null)
+            ProductsModel model;
+            try
             {
+                model = new ProductsModel(connectionString_);
                 model.UpdatePrices(ordersRepository_);
+            }
+            catch (Exception error) when (error is DbException || error is InvalidOperationException || error is ArgumentException)
+            {
+                CatalogToolsPanel.Enabled = false;
+                MainLayout.Controls.Add(new Label
+                {
+                    AutoSize = true,
+                    Text = "Не удалось загрузить каталог из PostgreSQL. Проверьте запуск базы и настройки подключения."
+                });
+                return;
             }
 
             productsPresenter_ = new ProductsPresenter(model);
+            MainLayout.SuspendLayout();
             foreach (var product in productsPresenter_.GetCatalog(null, GetSortDirection()))
             {
                 DemoUIComponents.ProductCard card = new DemoUIComponents.ProductCard();
                 productsPresenter_.AddView(product, card);
                 MainLayout.Controls.Add(card);
             }
+            MainLayout.ResumeLayout(true);
         }
 
         private bool? GetSortDirection()
@@ -78,49 +93,31 @@ namespace WindowsFormsApp1
 
         private void SortComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (productsPresenter_ == null)
+            if (CurrentUser == null || productsPresenter_ == null)
             {
                 return;
             }
 
+            var products = productsPresenter_.GetCatalog(null, GetSortDirection());
             MainLayout.SuspendLayout();
-            try
+            for (int i = 0; i < products.Count; i++)
             {
-                var products = productsPresenter_.GetCatalog(null, GetSortDirection());
-                for (int i = 0; i < products.Count; i++)
-                {
-                    Control card = (Control)productsPresenter_.GetView(products[i]);
-                    MainLayout.Controls.SetChildIndex(card, i);
-                }
+                Control card = (Control)productsPresenter_.GetView(products[i]);
+                MainLayout.Controls.SetChildIndex(card, i);
             }
-            catch (Exception error)
-            {
-                MessageBox.Show(this, "Не удалось обновить каталог.\n" + error.Message,
-                    "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                MainLayout.ResumeLayout();
-            }
+            MainLayout.ResumeLayout(true);
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (productsPresenter_ == null)
+            if (CurrentUser == null || productsPresenter_ == null)
             {
                 return;
             }
 
             MainLayout.SuspendLayout();
-            try
-            {
-                productsPresenter_.Filter(SearchTextBox.Text);
-            }
-            finally
-            {
-                MainLayout.ResumeLayout();
-            }
+            productsPresenter_.Filter(SearchTextBox.Text);
+            MainLayout.ResumeLayout(true);
         }
-
     }
 }

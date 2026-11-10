@@ -131,7 +131,7 @@ namespace WindowsFormsApp1
             this.SearchNameLabel.Margin = new System.Windows.Forms.Padding(12, 7, 3, 0);
             this.SearchNameLabel.Name = "SearchNameLabel";
             this.SearchNameLabel.TabIndex = 2;
-            this.SearchNameLabel.Text = "Название:";
+            this.SearchNameLabel.Text = "Название или описание:";
             // SearchTextBox
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(285, 27);
@@ -149,11 +149,11 @@ namespace WindowsFormsApp1
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.HeaderLayout.ColumnCount = 4;
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.HeaderLayout.Controls.Add(this.WindowTitleLabel, 0, 0);
-            this.HeaderLayout.Controls.Add(this.LogoPictureBox, 1, 0);
+            this.HeaderLayout.Controls.Add(this.WindowTitleLabel, 1, 0);
+            this.HeaderLayout.Controls.Add(this.LogoPictureBox, 0, 0);
             this.HeaderLayout.Controls.Add(this.UserNameLabel, 2, 0);
             this.HeaderLayout.Controls.Add(this.UserRoleLabel, 2, 1);
             this.HeaderLayout.Controls.Add(this.UserAvatarPictureBox, 3, 0);
@@ -174,9 +174,9 @@ namespace WindowsFormsApp1
             this.HeaderLayout.SetRowSpan(this.WindowTitleLabel, 2);
             this.WindowTitleLabel.Size = new System.Drawing.Size(328, 120);
             this.WindowTitleLabel.Text = "ООО «Чудо Обувь»";
-            this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // LogoPictureBox
-            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogoPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.LogoPictureBox.Name = "LogoPictureBox";

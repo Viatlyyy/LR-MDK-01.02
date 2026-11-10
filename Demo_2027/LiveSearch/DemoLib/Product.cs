@@ -4,6 +4,8 @@ namespace DemoLib
 {
     public class Product
     {
+        public int Id { get; set; }
+
         public string Category { get; set; }
 
         public int Count { get; set; }
@@ -13,6 +15,8 @@ namespace DemoLib
         public double Price { get; set; }
 
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public string Supplier { get; set; }
 

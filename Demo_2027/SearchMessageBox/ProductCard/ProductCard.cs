@@ -10,6 +10,7 @@ namespace DemoUIComponents
     public partial class ProductCard : System.Windows.Forms.UserControl, IProductsView
     {
         private Product product_;
+        private bool hovered_;
 
         private Color normalColor_ = ColorTranslator.FromHtml("#D2F6E7");
         private Color enteringColor_ = ColorTranslator.FromHtml("#70B2AF");
@@ -82,14 +83,14 @@ namespace DemoUIComponents
 
         private void ProductCard_MouseEnter(object sender, EventArgs e)
         {
-            BackColor = enteringColor_;
+            SetHovered(true);
         }
 
         private void ProductCard_MouseLeave(object sender, EventArgs e)
         {
             if (!ClientRectangle.Contains(PointToClient(MousePosition)))
             {
-                BackColor = GetColor();
+                SetHovered(false);
             }
         }
 
@@ -98,17 +99,26 @@ namespace DemoUIComponents
             base.OnVisibleChanged(e);
             if (!Visible)
             {
-                BackColor = GetColor();
+                SetHovered(false);
             }
         }
 
-        /*
-        private void ProductCard_Paint(object sender, PaintEventArgs e)
+        private void SetHovered(bool hovered)
         {
-            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Black, ButtonBorderStyle.Solid);
+            if (hovered_ != hovered)
+            {
+                hovered_ = hovered;
+                Invalidate();
+            }
         }
-        */
 
-
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            if (hovered_)
+            {
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, enteringColor_, ButtonBorderStyle.Solid);
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace WindowsFormsApp1
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.MainLayout = new BufferedFlowLayoutPanel();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.PagesTabControl = new System.Windows.Forms.TabControl();
             this.CardsTabPage = new System.Windows.Forms.TabPage();
@@ -244,7 +244,7 @@ namespace WindowsFormsApp1
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel MainLayout;
+        private BufferedFlowLayoutPanel MainLayout;
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.TabControl PagesTabControl;
         private System.Windows.Forms.TabPage CardsTabPage;

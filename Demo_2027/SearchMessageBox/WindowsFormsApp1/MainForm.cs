@@ -33,6 +33,8 @@ namespace WindowsFormsApp1
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            CatalogToolsPanel.Visible = CurrentUser != null;
+
             if (SortComboBox.SelectedIndex < 0)
             {
                 SortComboBox.SelectedIndex = 0;

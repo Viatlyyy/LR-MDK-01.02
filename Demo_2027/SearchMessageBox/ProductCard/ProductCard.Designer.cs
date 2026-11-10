@@ -146,6 +146,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(246)))), ((int)(((byte)(231)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DoubleBuffered = true;
             this.Controls.Add(this.PriceProductLabel);
             this.Controls.Add(this.SupplierLabel);
             this.Controls.Add(this.ImagePictureBox);
@@ -159,7 +160,7 @@
             this.Name = "ProductCard";
             this.Size = new System.Drawing.Size(880, 180);
             this.MouseLeave += new System.EventHandler(this.ProductCard_MouseLeave);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProductCard_MouseMove);
+            this.MouseEnter += new System.EventHandler(this.ProductCard_MouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

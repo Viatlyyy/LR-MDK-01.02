@@ -56,16 +56,12 @@ namespace WindowsFormsApp1
             }
 
             productsPresenter_ = new ProductsPresenter(model);
-            int countProducts = model.GetCountProducts();
-            for (int i = 0; i < countProducts; i++)
+            foreach (var product in productsPresenter_.GetCatalog(null, GetSortDirection()))
             {
                 DemoUIComponents.ProductCard card = new DemoUIComponents.ProductCard();
+                productsPresenter_.AddView(product, card);
                 MainLayout.Controls.Add(card);
-
-                productsPresenter_.AddView(card);
             }
-
-            UpdateCatalog(null);
         }
 
         private bool? GetSortDirection()
@@ -81,32 +77,55 @@ namespace WindowsFormsApp1
             return null;
         }
 
-        private void UpdateCatalog(string namePart)
+        private void SortComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (productsPresenter_ == null)
             {
                 return;
             }
 
+            MainLayout.SuspendLayout();
             try
             {
-                productsPresenter_.Update(namePart, GetSortDirection());
+                var products = productsPresenter_.GetCatalog(null, GetSortDirection());
+                for (int i = 0; i < products.Count; i++)
+                {
+                    Control card = (Control)productsPresenter_.GetView(products[i]);
+                    MainLayout.Controls.SetChildIndex(card, i);
+                }
             }
             catch (Exception error)
             {
                 MessageBox.Show(this, "Не удалось обновить каталог.\n" + error.Message,
                     "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void SortComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateCatalog(SearchTextBox.Text);
+            finally
+            {
+                MainLayout.ResumeLayout();
+            }
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            UpdateCatalog(SearchTextBox.Text);
+            if (productsPresenter_ == null)
+            {
+                return;
+            }
+
+            MainLayout.SuspendLayout();
+            try
+            {
+                productsPresenter_.Filter(SearchTextBox.Text);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(this, "Не удалось обновить каталог.\n" + error.Message,
+                    "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                MainLayout.ResumeLayout();
+            }
         }
 
         private void SearchButton_Click(object sender, EventArgs e)

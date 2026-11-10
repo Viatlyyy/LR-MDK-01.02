@@ -1,5 +1,6 @@
 ﻿using DemoLib;
 using DemoLib.Views;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace DemoUIComponents
             InitializeComponent();
             foreach(Control c in Controls)
             {
-                c.MouseMove += ProductCard_MouseMove;
+                c.MouseEnter += ProductCard_MouseEnter;
                 c.MouseLeave += ProductCard_MouseLeave;
             }
 
@@ -79,15 +80,26 @@ namespace DemoUIComponents
 
         }
 
-        private void ProductCard_MouseMove(object sender, MouseEventArgs e)
+        private void ProductCard_MouseEnter(object sender, EventArgs e)
         {
             BackColor = enteringColor_;
         }
 
-        private void ProductCard_MouseLeave(object sender, System.EventArgs e)
+        private void ProductCard_MouseLeave(object sender, EventArgs e)
         {
-            BackColor = GetColor();
+            if (!ClientRectangle.Contains(PointToClient(MousePosition)))
+            {
+                BackColor = GetColor();
+            }
+        }
 
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (!Visible)
+            {
+                BackColor = GetColor();
+            }
         }
 
         /*

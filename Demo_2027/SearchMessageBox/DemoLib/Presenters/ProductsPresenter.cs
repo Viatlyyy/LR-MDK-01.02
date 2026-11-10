@@ -1,6 +1,5 @@
 ﻿using DemoLib.Models;
 using DemoLib.Views;
-using System;
 using System.Collections.Generic;
 
 namespace DemoLib.Presenters
@@ -8,16 +7,22 @@ namespace DemoLib.Presenters
     public class ProductsPresenter
     {
         private IProductsModel model_;
-        private List<IProductsView> views_ = new List<IProductsView>();
+        private Dictionary<Product, IProductsView> views_ = new Dictionary<Product, IProductsView>();
 
         public ProductsPresenter(IProductsModel model)
         {
             model_ = model;
         }
 
-        public void AddView(IProductsView view)
+        public void AddView(Product product, IProductsView view)
         {
-            views_.Add(view);
+            view.Show(product);
+            views_.Add(product, view);
+        }
+
+        public IProductsView GetView(Product product)
+        {
+            return views_[product];
         }
 
         public List<Product> GetCatalog(string namePart, bool? ascending)
@@ -25,21 +30,12 @@ namespace DemoLib.Presenters
             return model_.GetCatalog(namePart, ascending);
         }
 
-        public void Update(string namePart = null, bool? ascending = null)
+        public void Filter(string namePart)
         {
-            List<Product> products = GetCatalog(namePart, ascending);
-            for (int i = 0; i < views_.Count; i++)
+            var matches = new HashSet<Product>(GetCatalog(namePart, null));
+            foreach (var item in views_)
             {
-                IProductsView view = views_[i];
-                if (i < products.Count)
-                {
-                    view.Show(products[i]);
-                    view.Visible = true;
-                }
-                else
-                {
-                    view.Visible = false;
-                }
+                item.Value.Visible = matches.Contains(item.Key);
             }
         }
     }

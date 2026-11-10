@@ -39,7 +39,6 @@ namespace WindowsFormsApp1
             this.SortComboBox = new System.Windows.Forms.ComboBox();
             this.SearchNameLabel = new System.Windows.Forms.Label();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.SearchButton = new System.Windows.Forms.Button();
             this.HeaderLayout = new System.Windows.Forms.TableLayoutPanel();
             this.WindowTitleLabel = new System.Windows.Forms.Label();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
@@ -103,7 +102,6 @@ namespace WindowsFormsApp1
             this.CatalogToolsPanel.Controls.Add(this.SortComboBox);
             this.CatalogToolsPanel.Controls.Add(this.SearchNameLabel);
             this.CatalogToolsPanel.Controls.Add(this.SearchTextBox);
-            this.CatalogToolsPanel.Controls.Add(this.SearchButton);
             this.CatalogToolsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.CatalogToolsPanel.Location = new System.Drawing.Point(4, 4);
             this.CatalogToolsPanel.Name = "CatalogToolsPanel";
@@ -138,17 +136,7 @@ namespace WindowsFormsApp1
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(285, 27);
             this.SearchTextBox.TabIndex = 3;
-            this.SearchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchTextBox_KeyDown);
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
-            // SearchButton
-            this.SearchButton.BackColor = System.Drawing.Color.FromArgb(112, 178, 175);
-            this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(100, 29);
-            this.SearchButton.TabIndex = 4;
-            this.SearchButton.Text = "Найти";
-            this.SearchButton.UseVisualStyleBackColor = false;
-            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // OrdersTabPage
             this.OrdersTabPage.BackColor = System.Drawing.Color.White;
             this.OrdersTabPage.Location = new System.Drawing.Point(4, 40);
@@ -266,7 +254,6 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.ComboBox SortComboBox;
         private System.Windows.Forms.Label SearchNameLabel;
         private System.Windows.Forms.TextBox SearchTextBox;
-        private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.TableLayoutPanel HeaderLayout;
         private System.Windows.Forms.Label WindowTitleLabel;
         private System.Windows.Forms.PictureBox LogoPictureBox;

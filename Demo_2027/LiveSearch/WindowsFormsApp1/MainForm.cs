@@ -4,7 +4,6 @@ using DemoLib.Repositories;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -117,66 +116,10 @@ namespace WindowsFormsApp1
             {
                 productsPresenter_.Filter(SearchTextBox.Text);
             }
-            catch (Exception error)
-            {
-                MessageBox.Show(this, "Не удалось обновить каталог.\n" + error.Message,
-                    "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             finally
             {
                 MainLayout.ResumeLayout();
             }
-        }
-
-        private void SearchButton_Click(object sender, EventArgs e)
-        {
-            if (productsPresenter_ == null)
-            {
-                return;
-            }
-
-            try
-            {
-                MessageBox.Show(this, BuildSearchMessage(SearchTextBox.Text),
-                    "Результаты поиска", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(this, "Не удалось выполнить поиск.\n" + error.Message,
-                    "Ошибка поиска", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                SearchButton.PerformClick();
-            }
-        }
-
-        private string BuildSearchMessage(string query)
-        {
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                return "Введите часть названия товара";
-            }
-
-            var products = productsPresenter_.GetCatalog(query, GetSortDirection());
-            if (products.Count == 0)
-            {
-                return "Товары не найдены";
-            }
-
-            StringBuilder message = new StringBuilder();
-            message.AppendLine("Найдено товаров: " + products.Count);
-            for (int i = 0; i < products.Count; i++)
-            {
-                var product = products[i];
-                message.AppendLine($"{i + 1}. {product.Name} — {product.Price} руб. — остаток: {product.Count}");
-            }
-            return message.ToString().TrimEnd();
         }
 
     }

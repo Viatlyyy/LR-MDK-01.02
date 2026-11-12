@@ -15,6 +15,19 @@ namespace DemoLib.Data
             connectionString_ = connectionString;
         }
 
+        private T Read<T>(string sql, Func<NpgsqlDataReader, T> mapResult)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString_))
+            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+            {
+                connection.Open();
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    return mapResult(reader);
+                }
+            }
+        }
+
         public List<Product> LoadProducts()
         {
             const string sql = @"
@@ -88,19 +101,6 @@ namespace DemoLib.Data
                 }
                 return orders;
             });
-        }
-
-        private T Read<T>(string sql, Func<NpgsqlDataReader, T> mapResult)
-        {
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString_))
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            {
-                connection.Open();
-                using (NpgsqlDataReader reader = command.ExecuteReader())
-                {
-                    return mapResult(reader);
-                }
-            }
         }
     }
 }

@@ -11,7 +11,6 @@ namespace DemoUIComponents
     {
         private Product product_;
         private Bitmap productImage_;
-        private bool hovered_;
 
         private Color normalColor_ = ColorTranslator.FromHtml("#D2F6E7");
         private Color enteringColor_ = ColorTranslator.FromHtml("#70B2AF");
@@ -134,10 +133,6 @@ namespace DemoUIComponents
             DrawLabel(e.Graphics, label3, TextFormatFlags.SingleLine);
             DrawLabel(e.Graphics, PartsLabel, TextFormatFlags.WordBreak);
             DrawLabel(e.Graphics, PriceProductLabel, TextFormatFlags.SingleLine | TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
-            if (hovered_)
-            {
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, enteringColor_, ButtonBorderStyle.Solid);
-            }
         }
 
         private void DrawLabel(Graphics graphics, Label label, TextFormatFlags flags)
@@ -174,11 +169,7 @@ namespace DemoUIComponents
 
         private void SetHovered(bool hovered)
         {
-            if (hovered_ != hovered)
-            {
-                hovered_ = hovered;
-                Invalidate();
-            }
+            BackColor = hovered ? enteringColor_ : GetColor();
         }
 
         private void ProductCard_Disposed(object sender, EventArgs e)

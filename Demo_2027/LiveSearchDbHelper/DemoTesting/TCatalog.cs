@@ -96,6 +96,28 @@ namespace DemoTesting
             Assert.AreNotSame(model.Load(), products);
         }
 
+        [TestMethod]
+        public void GetCatalog_CategoryCombinesWithSearchAndPriceOrder()
+        {
+            ProductsModel model = new ProductsModel(new List<Product>
+            {
+                new Product { Name = "Кеды", Category = "Мужская", Price = 900 },
+                new Product { Name = "Кроссовки", Description = "Лёгкие кеды", Category = "Детская", Price = 500 },
+                new Product { Name = "Кеды высокие", Category = "Детская", Price = 700 },
+                new Product { Name = "Сапоги", Category = "Детская", Price = 1000 }
+            });
+
+            var products = model.GetCatalog("  КЕДЫ  ", false, "Детская");
+
+            Assert.AreEqual(2, products.Count);
+            Assert.AreEqual("Кеды высокие", products[0].Name);
+            Assert.AreEqual("Кроссовки", products[1].Name);
+
+            products = model.GetCatalog("кеды", false);
+            Assert.AreEqual(3, products.Count);
+            Assert.AreEqual("Кеды", products[0].Name);
+        }
+
         private ProductsModel CreateModel()
         {
             return new ProductsModel(new List<Product>

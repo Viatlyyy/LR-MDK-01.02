@@ -24,7 +24,7 @@ namespace DemoLib.Models
             return data_;
         }
 
-        public List<Product> GetCatalog(string namePart, bool? ascending)
+        public List<Product> GetCatalog(string namePart, bool? ascending, string category = null)
         {
             IEnumerable<Product> products = data_;
             string query = (namePart ?? string.Empty).Trim();
@@ -33,6 +33,11 @@ namespace DemoLib.Models
                 products = products.Where(product =>
                     product.Name?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0 ||
                     product.Description?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            if (category != null)
+            {
+                products = products.Where(product => product.Category == category);
             }
 
             if (ascending.HasValue)

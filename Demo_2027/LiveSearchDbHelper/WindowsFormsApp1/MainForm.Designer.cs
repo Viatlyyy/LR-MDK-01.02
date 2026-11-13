@@ -37,6 +37,8 @@ namespace WindowsFormsApp1
             this.CatalogToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.CatalogSortLabel = new System.Windows.Forms.Label();
             this.SortComboBox = new System.Windows.Forms.ComboBox();
+            this.CategoryLabel = new System.Windows.Forms.Label();
+            this.CategoryComboBox = new System.Windows.Forms.ComboBox();
             this.SearchNameLabel = new System.Windows.Forms.Label();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.HeaderLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -100,6 +102,8 @@ namespace WindowsFormsApp1
             this.CatalogToolsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CatalogToolsPanel.Controls.Add(this.CatalogSortLabel);
             this.CatalogToolsPanel.Controls.Add(this.SortComboBox);
+            this.CatalogToolsPanel.Controls.Add(this.CategoryLabel);
+            this.CatalogToolsPanel.Controls.Add(this.CategoryComboBox);
             this.CatalogToolsPanel.Controls.Add(this.SearchNameLabel);
             this.CatalogToolsPanel.Controls.Add(this.SearchTextBox);
             this.CatalogToolsPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -123,20 +127,33 @@ namespace WindowsFormsApp1
                 "По убыванию цены"});
             this.SortComboBox.Name = "SortComboBox";
             this.SortComboBox.SelectedIndex = 0;
-            this.SortComboBox.Size = new System.Drawing.Size(220, 27);
+            this.SortComboBox.Size = new System.Drawing.Size(180, 27);
             this.SortComboBox.TabIndex = 1;
-            this.SortComboBox.SelectedIndexChanged += new System.EventHandler(this.SortComboBox_SelectedIndexChanged);
+            this.SortComboBox.SelectedIndexChanged += new System.EventHandler(this.CatalogFilterChanged);
+            // CategoryLabel
+            this.CategoryLabel.AutoSize = true;
+            this.CategoryLabel.Margin = new System.Windows.Forms.Padding(12, 7, 3, 0);
+            this.CategoryLabel.Name = "CategoryLabel";
+            this.CategoryLabel.Text = "Категория:";
+            // CategoryComboBox
+            this.CategoryComboBox.AccessibleName = "Категория товара";
+            this.CategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryComboBox.FormattingEnabled = true;
+            this.CategoryComboBox.Name = "CategoryComboBox";
+            this.CategoryComboBox.Size = new System.Drawing.Size(164, 27);
+            this.CategoryComboBox.TabIndex = 2;
+            this.CategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.CatalogFilterChanged);
             // SearchNameLabel
             this.SearchNameLabel.AutoSize = true;
             this.SearchNameLabel.Margin = new System.Windows.Forms.Padding(12, 7, 3, 0);
             this.SearchNameLabel.Name = "SearchNameLabel";
-            this.SearchNameLabel.TabIndex = 2;
+            this.SearchNameLabel.TabIndex = 3;
             this.SearchNameLabel.Text = "Название или описание:";
             // SearchTextBox
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(285, 27);
-            this.SearchTextBox.TabIndex = 3;
-            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.SearchTextBox.Size = new System.Drawing.Size(205, 27);
+            this.SearchTextBox.TabIndex = 4;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.CatalogFilterChanged);
             // OrdersTabPage
             this.OrdersTabPage.BackColor = System.Drawing.Color.White;
             this.OrdersTabPage.Location = new System.Drawing.Point(4, 40);
@@ -252,6 +269,8 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.FlowLayoutPanel CatalogToolsPanel;
         private System.Windows.Forms.Label CatalogSortLabel;
         private System.Windows.Forms.ComboBox SortComboBox;
+        private System.Windows.Forms.Label CategoryLabel;
+        private System.Windows.Forms.ComboBox CategoryComboBox;
         private System.Windows.Forms.Label SearchNameLabel;
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.TableLayoutPanel HeaderLayout;

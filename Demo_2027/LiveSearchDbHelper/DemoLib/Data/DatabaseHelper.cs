@@ -28,6 +28,20 @@ namespace DemoLib.Data
             }
         }
 
+        public List<string> LoadCategories()
+        {
+            const string sql = "SELECT name FROM chudo_obuv.categories ORDER BY name;";
+            return Read(sql, reader =>
+            {
+                List<string> categories = new List<string>();
+                while (reader.Read())
+                {
+                    categories.Add(reader.GetString(0));
+                }
+                return categories;
+            });
+        }
+
         public List<Product> LoadProducts()
         {
             const string sql = @"

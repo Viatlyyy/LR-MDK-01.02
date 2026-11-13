@@ -56,6 +56,16 @@ namespace WindowsFormsApp1
             {
                 model = new ProductsModel(database_);
                 model.UpdatePrices(ordersRepository_);
+
+                if (CurrentUser != null)
+                {
+                    CategoryComboBox.Items.Add("Все категории");
+                    foreach (string category in database_.LoadCategories())
+                    {
+                        CategoryComboBox.Items.Add(category);
+                    }
+                    CategoryComboBox.SelectedIndex = 0;
+                }
             }
             catch (Exception error) when (error is DbException || error is InvalidOperationException || error is ArgumentException)
             {
@@ -92,32 +102,28 @@ namespace WindowsFormsApp1
             return null;
         }
 
-        private void SortComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void CatalogFilterChanged(object sender, EventArgs e)
         {
             if (CurrentUser == null || productsPresenter_ == null)
             {
                 return;
             }
 
-            var products = productsPresenter_.GetCatalog(null, GetSortDirection());
+            string category = CategoryComboBox.SelectedIndex > 0
+                ? (string)CategoryComboBox.SelectedItem
+                : null;
+            var products = productsPresenter_.GetCatalog(SearchTextBox.Text, GetSortDirection(), category);
+
             MainLayout.SuspendLayout();
+            productsPresenter_.SetVisibleProducts(products);
             for (int i = 0; i < products.Count; i++)
             {
                 Control card = (Control)productsPresenter_.GetView(products[i]);
-                MainLayout.Controls.SetChildIndex(card, i);
+                if (MainLayout.Controls[i] != card)
+                {
+                    MainLayout.Controls.SetChildIndex(card, i);
+                }
             }
-            MainLayout.ResumeLayout(true);
-        }
-
-        private void SearchTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (CurrentUser == null || productsPresenter_ == null)
-            {
-                return;
-            }
-
-            MainLayout.SuspendLayout();
-            productsPresenter_.Filter(SearchTextBox.Text);
             MainLayout.ResumeLayout(true);
         }
     }

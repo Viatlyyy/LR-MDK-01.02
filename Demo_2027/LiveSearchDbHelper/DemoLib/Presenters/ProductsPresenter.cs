@@ -25,14 +25,14 @@ namespace DemoLib.Presenters
             return views_[product];
         }
 
-        public List<Product> GetCatalog(string namePart, bool? ascending)
+        public List<Product> GetCatalog(string namePart, bool? ascending, string category = null)
         {
-            return model_.GetCatalog(namePart, ascending);
+            return model_.GetCatalog(namePart, ascending, category);
         }
 
-        public void Filter(string namePart)
+        public void SetVisibleProducts(IEnumerable<Product> products)
         {
-            var matches = new HashSet<Product>(GetCatalog(namePart, null));
+            var matches = new HashSet<Product>(products);
             foreach (var item in views_)
             {
                 item.Value.Visible = matches.Contains(item.Key);

@@ -10,9 +10,6 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    // цвета
-    // доп фон #D2F6E7
-    // акцентир #70B2AF
     public partial class MainForm : Form
     {
         private DatabaseHelper database_;
@@ -80,7 +77,7 @@ namespace WindowsFormsApp1
 
             productsPresenter_ = new ProductsPresenter(model);
             MainLayout.SuspendLayout();
-            foreach (var product in productsPresenter_.GetCatalog(null, GetSortDirection()))
+            foreach (var product in productsPresenter_.GetCatalog(new CatalogParams(null, GetSortDirection())))
             {
                 DemoUIComponents.ProductCard card = new DemoUIComponents.ProductCard();
                 productsPresenter_.AddView(product, card);
@@ -112,7 +109,8 @@ namespace WindowsFormsApp1
             string category = CategoryComboBox.SelectedIndex > 0
                 ? (string)CategoryComboBox.SelectedItem
                 : null;
-            var products = productsPresenter_.GetCatalog(SearchTextBox.Text, GetSortDirection(), category);
+            CatalogParams parameters = new CatalogParams(SearchTextBox.Text, GetSortDirection(), category);
+            var products = productsPresenter_.GetCatalog(parameters);
 
             MainLayout.SuspendLayout();
             productsPresenter_.SetVisibleProducts(products);

@@ -6,7 +6,7 @@ namespace DemoLib.Models
     {
         List<Product> Load();
 
-        List<Product> GetCatalog(string namePart, bool? ascending, string category = null);
+        List<Product> GetCatalog(CatalogParams parameters);
 
         int GetCountProducts();
     }

@@ -2,15 +2,8 @@ namespace WindowsFormsApp1
 {
     partial class MainForm
     {
-        /// <summary>
-        /// Обязательная переменная конструктора.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,14 +15,10 @@ namespace WindowsFormsApp1
 
         #region Код, автоматически созданный конструктором форм Windows
 
-        /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainLayout = new BufferedFlowLayoutPanel();
+            this.MainLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.ContentPanel = new System.Windows.Forms.Panel();
             this.PagesTabControl = new System.Windows.Forms.TabControl();
             this.CardsTabPage = new System.Windows.Forms.TabPage();
@@ -55,9 +44,6 @@ namespace WindowsFormsApp1
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UserAvatarPictureBox)).BeginInit();
             this.SuspendLayout();
-            //
-            // MainLayout
-            //
             this.MainLayout.AutoScroll = true;
             this.MainLayout.BackColor = System.Drawing.Color.White;
             this.MainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -67,7 +53,6 @@ namespace WindowsFormsApp1
             this.MainLayout.Size = new System.Drawing.Size(1000, 584);
             this.MainLayout.TabIndex = 1;
             this.MainLayout.WrapContents = true;
-            // ContentPanel
             this.ContentPanel.BackColor = System.Drawing.Color.White;
             this.ContentPanel.Controls.Add(this.PagesTabControl);
             this.ContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -76,7 +61,6 @@ namespace WindowsFormsApp1
             this.ContentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.ContentPanel.Size = new System.Drawing.Size(1040, 616);
             this.ContentPanel.TabIndex = 2;
-            // PagesTabControl
             this.PagesTabControl.Controls.Add(this.CardsTabPage);
             this.PagesTabControl.Controls.Add(this.OrdersTabPage);
             this.PagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -87,7 +71,6 @@ namespace WindowsFormsApp1
             this.PagesTabControl.Size = new System.Drawing.Size(1016, 636);
             this.PagesTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.PagesTabControl.TabIndex = 0;
-            // CardsTabPage
             this.CardsTabPage.BackColor = System.Drawing.Color.White;
             this.CardsTabPage.Controls.Add(this.MainLayout);
             this.CardsTabPage.Controls.Add(this.CatalogToolsPanel);
@@ -97,7 +80,6 @@ namespace WindowsFormsApp1
             this.CardsTabPage.Size = new System.Drawing.Size(1008, 592);
             this.CardsTabPage.TabIndex = 0;
             this.CardsTabPage.Text = "Карточки";
-            // CatalogToolsPanel
             this.CatalogToolsPanel.AutoSize = true;
             this.CatalogToolsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CatalogToolsPanel.Controls.Add(this.CatalogSortLabel);
@@ -112,13 +94,11 @@ namespace WindowsFormsApp1
             this.CatalogToolsPanel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 6);
             this.CatalogToolsPanel.Size = new System.Drawing.Size(1000, 43);
             this.CatalogToolsPanel.TabIndex = 0;
-            // CatalogSortLabel
             this.CatalogSortLabel.AutoSize = true;
             this.CatalogSortLabel.Margin = new System.Windows.Forms.Padding(3, 7, 3, 0);
             this.CatalogSortLabel.Name = "CatalogSortLabel";
             this.CatalogSortLabel.TabIndex = 0;
             this.CatalogSortLabel.Text = "Сортировка:";
-            // SortComboBox
             this.SortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortComboBox.FormattingEnabled = true;
             this.SortComboBox.Items.AddRange(new object[] {
@@ -130,12 +110,10 @@ namespace WindowsFormsApp1
             this.SortComboBox.Size = new System.Drawing.Size(180, 27);
             this.SortComboBox.TabIndex = 1;
             this.SortComboBox.SelectedIndexChanged += new System.EventHandler(this.CatalogFilterChanged);
-            // CategoryLabel
             this.CategoryLabel.AutoSize = true;
             this.CategoryLabel.Margin = new System.Windows.Forms.Padding(12, 7, 3, 0);
             this.CategoryLabel.Name = "CategoryLabel";
             this.CategoryLabel.Text = "Категория:";
-            // CategoryComboBox
             this.CategoryComboBox.AccessibleName = "Категория товара";
             this.CategoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoryComboBox.FormattingEnabled = true;
@@ -143,18 +121,15 @@ namespace WindowsFormsApp1
             this.CategoryComboBox.Size = new System.Drawing.Size(164, 27);
             this.CategoryComboBox.TabIndex = 2;
             this.CategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.CatalogFilterChanged);
-            // SearchNameLabel
             this.SearchNameLabel.AutoSize = true;
             this.SearchNameLabel.Margin = new System.Windows.Forms.Padding(12, 7, 3, 0);
             this.SearchNameLabel.Name = "SearchNameLabel";
             this.SearchNameLabel.TabIndex = 3;
             this.SearchNameLabel.Text = "Название или описание:";
-            // SearchTextBox
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(205, 27);
             this.SearchTextBox.TabIndex = 4;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.CatalogFilterChanged);
-            // OrdersTabPage
             this.OrdersTabPage.BackColor = System.Drawing.Color.White;
             this.OrdersTabPage.Location = new System.Drawing.Point(4, 40);
             this.OrdersTabPage.Name = "OrdersTabPage";
@@ -162,7 +137,6 @@ namespace WindowsFormsApp1
             this.OrdersTabPage.Size = new System.Drawing.Size(1008, 592);
             this.OrdersTabPage.TabIndex = 1;
             this.OrdersTabPage.Text = "Заказы";
-            // HeaderLayout
             this.HeaderLayout.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.HeaderLayout.ColumnCount = 4;
             this.HeaderLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
@@ -183,7 +157,6 @@ namespace WindowsFormsApp1
             this.HeaderLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.HeaderLayout.Size = new System.Drawing.Size(1040, 144);
             this.HeaderLayout.TabIndex = 0;
-            // WindowTitleLabel
             this.WindowTitleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WindowTitleLabel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold);
             this.WindowTitleLabel.Margin = new System.Windows.Forms.Padding(0);
@@ -192,7 +165,6 @@ namespace WindowsFormsApp1
             this.WindowTitleLabel.Size = new System.Drawing.Size(328, 120);
             this.WindowTitleLabel.Text = "ООО «Чудо Обувь»";
             this.WindowTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // LogoPictureBox
             this.LogoPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
@@ -201,7 +173,6 @@ namespace WindowsFormsApp1
             this.LogoPictureBox.Size = new System.Drawing.Size(144, 120);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabStop = false;
-            // UserAvatarPictureBox
             this.UserAvatarPictureBox.AccessibleName = "Профиль пользователя";
             this.UserAvatarPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserAvatarPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("UserAvatarPictureBox.Image")));
@@ -211,7 +182,6 @@ namespace WindowsFormsApp1
             this.UserAvatarPictureBox.Size = new System.Drawing.Size(112, 120);
             this.UserAvatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.UserAvatarPictureBox.TabStop = false;
-            // UserNameLabel
             this.UserNameLabel.AutoEllipsis = true;
             this.UserNameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserNameLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
@@ -219,7 +189,6 @@ namespace WindowsFormsApp1
             this.UserNameLabel.Name = "UserNameLabel";
             this.UserNameLabel.Text = "Гость";
             this.UserNameLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            // UserRoleLabel
             this.UserRoleLabel.AutoEllipsis = true;
             this.UserRoleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserRoleLabel.Font = new System.Drawing.Font("Calibri", 10F);
@@ -228,9 +197,6 @@ namespace WindowsFormsApp1
             this.UserRoleLabel.Name = "UserRoleLabel";
             this.UserRoleLabel.Text = "Гостевой режим";
             this.UserRoleLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            //
-            // MainForm
-            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -261,7 +227,7 @@ namespace WindowsFormsApp1
 
         #endregion
 
-        private BufferedFlowLayoutPanel MainLayout;
+        private System.Windows.Forms.FlowLayoutPanel MainLayout;
         private System.Windows.Forms.Panel ContentPanel;
         private System.Windows.Forms.TabControl PagesTabControl;
         private System.Windows.Forms.TabPage CardsTabPage;

@@ -15,7 +15,7 @@ namespace DemoTesting
             ProductsModel model = CreateModel();
             model.UpdatePrices(new DemoOrdersRepository());
 
-            var products = model.GetCatalog(null, true);
+            var products = model.GetCatalog(new CatalogParams(null, true));
 
             Assert.AreEqual(4, products.Count);
             Assert.AreEqual(375.0, products[0].Price);
@@ -31,7 +31,7 @@ namespace DemoTesting
         {
             ProductsModel model = CreateModel();
 
-            var products = model.GetCatalog(null, false);
+            var products = model.GetCatalog(new CatalogParams(null, false));
 
             Assert.AreEqual(4, products.Count);
             Assert.AreEqual(1990.0, products[0].Price);
@@ -47,7 +47,7 @@ namespace DemoTesting
         {
             ProductsModel model = CreateModel();
 
-            var products = model.GetCatalog("  ТУФ  ", null);
+            var products = model.GetCatalog(new CatalogParams("  ТУФ  ", null));
 
             Assert.AreEqual(2, products.Count);
             Assert.AreEqual("Черные туфли в классическом стиле", products[0].Name);
@@ -61,7 +61,7 @@ namespace DemoTesting
         {
             ProductsModel model = CreateModel();
 
-            var products = model.GetCatalog("  ДЛЯ ПРОГУЛОК  ", null);
+            var products = model.GetCatalog(new CatalogParams("  ДЛЯ ПРОГУЛОК  ", null));
 
             Assert.AreEqual(1, products.Count);
             Assert.AreEqual("Кроссовки", products[0].Name);
@@ -72,7 +72,7 @@ namespace DemoTesting
         {
             ProductsModel model = CreateModel();
 
-            var products = model.GetCatalog("натуральная кожа", null);
+            var products = model.GetCatalog(new CatalogParams("натуральная кожа", null));
 
             Assert.AreEqual(0, products.Count);
         }
@@ -81,10 +81,10 @@ namespace DemoTesting
         public void GetCatalog_BlankQuery_ReturnsAllProductsInOriginalOrder()
         {
             ProductsModel model = CreateModel();
-            model.GetCatalog(null, true);
-            model.GetCatalog(null, false);
+            model.GetCatalog(new CatalogParams(null, true));
+            model.GetCatalog(new CatalogParams(null, false));
 
-            var products = model.GetCatalog("  ", null);
+            var products = model.GetCatalog(new CatalogParams("  ", null));
 
             Assert.AreEqual(4, products.Count);
             Assert.AreEqual(1600.0, products[0].Price);
@@ -107,13 +107,13 @@ namespace DemoTesting
                 new Product { Name = "Сапоги", Category = "Детская", Price = 1000 }
             });
 
-            var products = model.GetCatalog("  КЕДЫ  ", false, "Детская");
+            var products = model.GetCatalog(new CatalogParams("  КЕДЫ  ", false, "Детская"));
 
             Assert.AreEqual(2, products.Count);
             Assert.AreEqual("Кеды высокие", products[0].Name);
             Assert.AreEqual("Кроссовки", products[1].Name);
 
-            products = model.GetCatalog("кеды", false);
+            products = model.GetCatalog(new CatalogParams("кеды", false));
             Assert.AreEqual(3, products.Count);
             Assert.AreEqual("Кеды", products[0].Name);
         }

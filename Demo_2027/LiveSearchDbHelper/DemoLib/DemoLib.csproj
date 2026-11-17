@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DatabaseHelper.cs" />
+    <Compile Include="Models\CatalogParams.cs" />
     <Compile Include="Models\IProductsModel.cs" />
     <Compile Include="Models\IAuthorization.cs" />
     <Compile Include="Models\Authorization.cs" />

@@ -24,10 +24,10 @@ namespace DemoLib.Models
             return data_;
         }
 
-        public List<Product> GetCatalog(string namePart, bool? ascending, string category = null)
+        public List<Product> GetCatalog(CatalogParams parameters)
         {
             IEnumerable<Product> products = data_;
-            string query = (namePart ?? string.Empty).Trim();
+            string query = (parameters.SearchText ?? string.Empty).Trim();
             if (query.Length > 0)
             {
                 products = products.Where(product =>
@@ -35,14 +35,14 @@ namespace DemoLib.Models
                     product.Description?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            if (category != null)
+            if (parameters.Category != null)
             {
-                products = products.Where(product => product.Category == category);
+                products = products.Where(product => product.Category == parameters.Category);
             }
 
-            if (ascending.HasValue)
+            if (parameters.Ascending.HasValue)
             {
-                products = ascending.Value
+                products = parameters.Ascending.Value
                     ? products.OrderBy(product => product.Price)
                     : products.OrderByDescending(product => product.Price);
             }
@@ -62,7 +62,6 @@ namespace DemoLib.Models
                 return;
             }
 
-            // Один снимок загрузки: источник БД не перечисляется заново для каждого товара.
             IEnumerable<Order> orders = ordersRepository.Load().ToArray();
             DateTime current = DateTime.Today;
             DateTime end = new DateTime(current.Year, current.Month, 1);

@@ -2,7 +2,6 @@ namespace DemoLib.Models
 {
     public class Authorization : IAuthorization
     {
-        // Пользователи из Users_import.xlsx; на этом этапе данные хранятся в коде.
         private User[] users_ = new User[]
         {
             new User { Login = "isivanov", FullName = "Иванов Иван Сергеевич", Role = "Администратор" },

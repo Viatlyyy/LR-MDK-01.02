@@ -19,8 +19,8 @@ namespace DemoUIComponents
         public ProductCard()
         {
             InitializeComponent();
-            DoubleBuffered = true;
-            SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             Disposed += ProductCard_Disposed;
         }
 
@@ -76,7 +76,6 @@ namespace DemoUIComponents
             productImage_?.Dispose();
             productImage_ = image;
 
-            // The designer controls provide layout; the card paints their content together at runtime.
             foreach (Control control in Controls)
             {
                 control.Visible = false;

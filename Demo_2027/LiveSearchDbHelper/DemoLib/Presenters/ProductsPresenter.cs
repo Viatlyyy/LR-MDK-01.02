@@ -25,17 +25,17 @@ namespace DemoLib.Presenters
             return views_[product];
         }
 
-        public List<Product> GetCatalog(string namePart, bool? ascending, string category = null)
+        public List<Product> GetCatalog(CatalogParams parameters)
         {
-            return model_.GetCatalog(namePart, ascending, category);
+            return model_.GetCatalog(parameters);
         }
 
         public void SetVisibleProducts(IEnumerable<Product> products)
         {
             var matches = new HashSet<Product>(products);
-            foreach (var item in views_)
+            foreach (var card in views_)
             {
-                item.Value.Visible = matches.Contains(item.Key);
+                card.Value.Visible = matches.Contains(card.Key);
             }
         }
     }

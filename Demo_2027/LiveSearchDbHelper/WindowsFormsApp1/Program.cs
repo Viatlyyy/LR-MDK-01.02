@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Windows.Forms;
 using DemoLib.Data;
 using DemoLib.Repositories;
@@ -9,9 +8,6 @@ namespace WindowsFormsApp1
 {
     public static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -27,13 +23,7 @@ namespace WindowsFormsApp1
                 }
                 user = loginForm.AuthorizedUser;
             }
-            string connectionString = Environment.GetEnvironmentVariable("CHUDO_OBUV_POSTGRES");
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                connectionString = ConfigurationManager.ConnectionStrings["ChudoObuv"]?.ConnectionString;
-            }
-
-            DatabaseHelper database = new DatabaseHelper(connectionString);
+            DatabaseHelper database = new DatabaseHelper();
             IOrdersRepository ordersRepository = new PostgresOrdersRepository(database);
             MainForm mainForm = new MainForm(database, ordersRepository);
             mainForm.CurrentUser = user;

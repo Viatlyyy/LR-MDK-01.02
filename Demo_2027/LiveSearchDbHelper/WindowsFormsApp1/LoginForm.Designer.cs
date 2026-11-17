@@ -29,7 +29,6 @@ namespace WindowsFormsApp1
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
-            // HeaderPanel
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.HeaderPanel.Controls.Add(this.SubtitleLabel);
             this.HeaderPanel.Controls.Add(this.TitleLabel);
@@ -38,37 +37,31 @@ namespace WindowsFormsApp1
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Name = "HeaderPanel";
             this.HeaderPanel.Size = new System.Drawing.Size(446, 100);
-            // LogoPictureBox
             this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
             this.LogoPictureBox.Location = new System.Drawing.Point(20, 12);
             this.LogoPictureBox.Name = "LogoPictureBox";
             this.LogoPictureBox.Size = new System.Drawing.Size(76, 76);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabStop = false;
-            // TitleLabel
             this.TitleLabel.Font = new System.Drawing.Font("Calibri", 22F, System.Drawing.FontStyle.Bold);
             this.TitleLabel.Location = new System.Drawing.Point(112, 16);
             this.TitleLabel.Name = "TitleLabel";
             this.TitleLabel.Size = new System.Drawing.Size(310, 40);
             this.TitleLabel.Text = "Чудо Обувь";
-            // SubtitleLabel
             this.SubtitleLabel.Location = new System.Drawing.Point(114, 59);
             this.SubtitleLabel.Name = "SubtitleLabel";
             this.SubtitleLabel.Size = new System.Drawing.Size(308, 26);
             this.SubtitleLabel.Text = "Вход в систему";
-            // LoginLabel
             this.LoginLabel.Location = new System.Drawing.Point(24, 120);
             this.LoginLabel.Name = "LoginLabel";
             this.LoginLabel.Size = new System.Drawing.Size(398, 25);
             this.LoginLabel.Text = "Логин";
-            // LoginTextBox
             this.LoginTextBox.Location = new System.Drawing.Point(24, 151);
             this.LoginTextBox.MaxLength = 100;
             this.LoginTextBox.Name = "LoginTextBox";
             this.LoginTextBox.Size = new System.Drawing.Size(398, 27);
             this.LoginTextBox.TabIndex = 0;
             this.LoginTextBox.TextChanged += new System.EventHandler(this.LoginTextBox_TextChanged);
-            // LoginButton
             this.LoginButton.BackColor = System.Drawing.Color.FromArgb(112, 178, 175);
             this.LoginButton.FlatAppearance.BorderSize = 0;
             this.LoginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -79,7 +72,6 @@ namespace WindowsFormsApp1
             this.LoginButton.Text = "Войти";
             this.LoginButton.UseVisualStyleBackColor = false;
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
-            // GuestLoginButton
             this.GuestLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.GuestLoginButton.CausesValidation = false;
             this.GuestLoginButton.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -91,7 +83,6 @@ namespace WindowsFormsApp1
             this.GuestLoginButton.TabIndex = 2;
             this.GuestLoginButton.Text = "Войти как гость";
             this.GuestLoginButton.UseVisualStyleBackColor = false;
-            // CancelLoginButton
             this.CancelLoginButton.BackColor = System.Drawing.Color.FromArgb(210, 246, 231);
             this.CancelLoginButton.CausesValidation = false;
             this.CancelLoginButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -103,12 +94,10 @@ namespace WindowsFormsApp1
             this.CancelLoginButton.TabIndex = 3;
             this.CancelLoginButton.Text = "Отмена";
             this.CancelLoginButton.UseVisualStyleBackColor = false;
-            // ErrorLabel
             this.ErrorLabel.ForeColor = System.Drawing.Color.FromArgb(170, 30, 30);
             this.ErrorLabel.Location = new System.Drawing.Point(24, 258);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Size = new System.Drawing.Size(398, 48);
-            // LoginForm
             this.AcceptButton = this.LoginButton;
             this.CancelButton = this.CancelLoginButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);

@@ -8,11 +8,16 @@ namespace DemoLib.Data
 {
     public class DatabaseHelper
     {
+        private const string DefaultConnectionString = "Host=127.0.0.1;Port=55432;Database=chudo_obuv;Username=chudo_obuv_app;Timeout=4;Command Timeout=10";
         private string connectionString_;
+
+        public DatabaseHelper() : this(Environment.GetEnvironmentVariable("CHUDO_OBUV_POSTGRES"))
+        {
+        }
 
         public DatabaseHelper(string connectionString)
         {
-            connectionString_ = connectionString;
+            connectionString_ = string.IsNullOrWhiteSpace(connectionString) ? DefaultConnectionString : connectionString;
         }
 
         private T Read<T>(string sql, Func<NpgsqlDataReader, T> mapResult)

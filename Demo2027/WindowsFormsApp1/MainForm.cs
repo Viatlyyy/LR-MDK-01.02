@@ -98,9 +98,9 @@ namespace WindowsFormsApp1
             OrdersGrid.Rows.Clear();
             OrdersStatusLabel.Visible = true;
 
-            if (CurrentUser?.Role != "Администратор")
+            if (CurrentUser?.Role != "Администратор" && CurrentUser?.Role != "Менеджер")
             {
-                OrdersStatusLabel.Text = "Просмотр всех заказов доступен администратору.";
+                OrdersStatusLabel.Text = "Просмотр всех заказов доступен администратору и менеджеру.";
                 return;
             }
 
